@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 
 void main() {
@@ -77,19 +79,31 @@ class _MyHomePageState extends State<MyHomePage> {
 
 class TopWidget extends StatelessWidget {
   const TopWidget({super.key});
-
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 350,
-      child: Container(
-        color: Colors.green,
-        child: const Column(
-          children: [
-            PrintandCircle(),
-            Text("Hello World"),
-          ],
-        ),
+    return Container(
+      color: Colors.green,
+      child: const Column(
+        children: [
+          PrintandCircle(),
+          Text(
+            style: TextStyle(
+              fontSize: 30,
+            ),
+            textAlign: TextAlign.center,
+            "My name is:",
+          ),
+          Padding(
+            padding: EdgeInsets.only(bottom: 15.0),
+            child: Text(
+              style: TextStyle(
+                fontSize: 40,
+              ),
+              textAlign: TextAlign.center,
+              "Kuber Badiang",
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -103,17 +117,16 @@ class PrintandCircle extends StatelessWidget {
     return const Row(
       children: [
         SizedBox(
-          height: 300,
+          height: 250,
           width: 200,
           child: PawPrint(),
         ),
-        Positioned(
-          top: 60,
-          right: 30,
+        Padding(
+          padding: EdgeInsets.only(left: 8.0, top: 50.0),
           child: CircleAvatar(
-            radius: 100,
+            radius: 80,
             backgroundColor: Colors.white,
-            child: Icon(Icons.pets, size: 50, color: Colors.brown),
+            child: Icon(Icons.pets, size: 100, color: Colors.brown),
           ),
         ),
       ],
@@ -178,6 +191,48 @@ class CenterWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Container(
+      width: double.infinity,
+        color: const Color.fromARGB(217, 217, 217, 217),
+        child: const Column(
+          children: <Widget>[
+            Card(
+              child: Column(
+                  children: <Widget>[
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 60.0),
+                      child: Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: Text(
+                          'Vetenarian Information',
+                          style: TextStyle(
+                            fontSize: 20,
+                          ),
+                        ),
+                      ),
+                      
+                    ),
+                    Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: Text(
+                        textAlign: TextAlign.left,
+                        style: TextStyle(
+                          fontSize: 20,
+                        ),
+                        'Name',
+                        
+                      ),
+                      
+                    ),
+                    
+                    
+                  ],
+                ),
+              ),
+              
+            
+            
+          ],
+        ));
   }
 }
