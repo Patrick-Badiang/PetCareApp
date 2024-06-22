@@ -66,7 +66,6 @@ class _MyHomePageState extends State<MyHomePage> {
       body: const Column(
         children: <Widget>[
           TopWidget(),
-          
           Expanded(
             child: CenterWidget(),
           )
@@ -81,28 +80,42 @@ class TopWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  Stack(
+    return SizedBox(
+      height: 350,
+      child: Container(
+        color: Colors.green,
+        child: const Column(
+          children: [
+            PrintandCircle(),
+            Text("Hello World"),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class PrintandCircle extends StatelessWidget {
+  const PrintandCircle({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Row(
       children: [
         SizedBox(
-          height:350,
-          child: Container(color: Colors.green,)
-          ),
-        
-        const SizedBox(
-          height: 200,
+          height: 300,
           width: 200,
           child: PawPrint(),
         ),
-        const Positioned(
+        Positioned(
           top: 60,
           right: 30,
-          child:  CircleAvatar(
+          child: CircleAvatar(
             radius: 100,
             backgroundColor: Colors.white,
             child: Icon(Icons.pets, size: 50, color: Colors.brown),
           ),
         ),
-        
       ],
     );
   }
