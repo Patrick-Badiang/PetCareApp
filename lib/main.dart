@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 void main() {
   runApp(const MyApp());
@@ -81,9 +82,75 @@ class TopWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Stack(
+      children: [
+        Expanded(
+          child: Container(
+            color: Colors.green,
+          ),
+        ),
+        const SizedBox(
+          height: 200,
+          width: 200,
+          child: PawPrint(),
+        )
+      ],
+    );
   }
 }
+
+class PawPrint extends StatelessWidget {
+  const PawPrint({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: [
+        Container(
+          width: 150,
+          height: 150,
+          decoration: const BoxDecoration(
+            color: Colors.brown,
+            borderRadius: BorderRadius.only(
+              bottomRight: Radius.circular(500),
+            ),
+          ),
+        ),
+        Positioned(
+          top: 150,
+          left: 20,
+          child: Container(
+            width: 50,
+            height: 50,
+            decoration: const BoxDecoration(
+                color: Colors.brown, shape: BoxShape.circle),
+          ),
+        ),
+        Positioned(
+          top: 110,
+          left: 95,
+          child: Container(
+            width: 50,
+            height: 50,
+            decoration: const BoxDecoration(
+                color: Colors.brown, shape: BoxShape.circle),
+          ),
+        ),
+        Positioned(
+          top: 50,
+          left: 140,
+          child: Container(
+            width: 50,
+            height: 50,
+            decoration: const BoxDecoration(
+                color: Colors.brown, shape: BoxShape.circle),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
 class CenterWidget extends StatelessWidget {
   const CenterWidget({super.key});
 
