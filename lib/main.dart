@@ -65,9 +65,8 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: const Column(
         children: <Widget>[
-          Expanded(
-            child: TopWidget(),
-          ),
+          TopWidget(),
+          
           Expanded(
             child: CenterWidget(),
           )
@@ -82,18 +81,28 @@ class TopWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
+    return  Stack(
       children: [
-        Expanded(
-          child: Container(
-            color: Colors.green,
+        SizedBox(
+          height:350,
+          child: Container(color: Colors.green,)
           ),
-        ),
+        
         const SizedBox(
           height: 200,
           width: 200,
           child: PawPrint(),
-        )
+        ),
+        const Positioned(
+          top: 60,
+          right: 30,
+          child:  CircleAvatar(
+            radius: 100,
+            backgroundColor: Colors.white,
+            child: Icon(Icons.pets, size: 50, color: Colors.brown),
+          ),
+        ),
+        
       ],
     );
   }
