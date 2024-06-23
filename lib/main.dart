@@ -192,47 +192,139 @@ class CenterWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: double.infinity,
-        color: const Color.fromARGB(217, 217, 217, 217),
+        width: double.infinity,
+        color: Color.fromARGB(217, 229, 229, 229),
         child: const Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
-            Card(
-              child: Column(
-                  children: <Widget>[
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 60.0),
-                      child: Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: Text(
-                          'Vetenarian Information',
-                          style: TextStyle(
-                            fontSize: 20,
-                          ),
-                        ),
-                      ),
-                      
-                    ),
-                    Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Text(
-                        textAlign: TextAlign.left,
-                        style: TextStyle(
-                          fontSize: 20,
-                        ),
-                        'Name',
-                        
-                      ),
-                      
-                    ),
-                    
-                    
-                  ],
-                ),
+            Center(child: VetCard()),
+            Padding(
+              padding: EdgeInsets.only(left: 30.0, top: 30.0),
+              child: Text( "Daily Tasks"),
+            ),
+            Padding(
+              padding: EdgeInsets.only(left: 40.0),
+              child: ListTile(
+                leading: Icon(Icons.check_box_outline_blank),
+                title: Text('Walk the dog'),
               ),
-              
-            
-            
+            ),
+            Padding(
+              padding: EdgeInsets.only(left: 40.0),
+              child: ListTile(
+                leading: Icon(Icons.check_box_outline_blank),
+                title: Text('Feed the dog'),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.only(left: 40.0),
+              child: ListTile(
+                leading: Icon(Icons.check_box_outline_blank),
+                title: Text('Brush the dog'),
+              ),
+            ),
           ],
         ));
+  }
+}
+
+class VetCard extends StatelessWidget {
+  const VetCard({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Padding(
+      padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 50.0),
+      child: Card(
+        color: Color.fromARGB(217, 217, 217, 217),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[
+            Center(
+              child: Text(
+                'Vetenarian Information',
+                style: TextStyle(
+                  fontSize: 20,
+                ),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.only(left: 20.0),
+              child: Row(
+                children: [
+                  Text(
+                    textAlign: TextAlign.left,
+                    style: TextStyle(
+                      fontSize: 10,
+                    ),
+                    'Name:',
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(left: 30.0),
+                    child: Text(
+                      textAlign: TextAlign.left,
+                      style: TextStyle(
+                        fontSize: 15,
+                      ),
+                      'Duck Creek Animal Hospital',
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.only(left: 20.0),
+              child: Row(
+                children: [
+                  Text(
+                    textAlign: TextAlign.left,
+                    style: TextStyle(
+                      fontSize: 10,
+                    ),
+                    'Number:',
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(left: 20.0),
+                    child: Text(
+                      textAlign: TextAlign.left,
+                      style: TextStyle(
+                        fontSize: 15,
+                      ),
+                      '(302) 653-2300',
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.only(left: 20.0),
+              child: Row(
+                children: [
+                  Text(
+                    textAlign: TextAlign.left,
+                    style: TextStyle(
+                      fontSize: 10,
+                    ),
+                    'Location:',
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(left: 20.0),
+                    child: Text(
+                      textAlign: TextAlign.left,
+                      style: TextStyle(
+                        fontSize: 15,
+                      ),
+                      'Smryna, DE',
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
