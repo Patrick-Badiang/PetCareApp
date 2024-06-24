@@ -193,37 +193,35 @@ class CenterWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
         width: double.infinity,
-        color: Color.fromARGB(217, 229, 229, 229),
-        child: const Column(
+        color: const Color.fromARGB(217, 229, 229, 229),
+        child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
-            Center(child: VetCard()),
-            Padding(
+            const Center(child: VetCard()),
+            const Padding(
               padding: EdgeInsets.only(left: 30.0, top: 30.0),
-              child: Text( "Daily Tasks"),
+              child: Text("Daily Tasks"),
             ),
+            
             Padding(
-              padding: EdgeInsets.only(left: 40.0),
-              child: ListTile(
-                leading: Icon(Icons.check_box_outline_blank),
-                title: Text('Walk the dog'),
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.only(left: 40.0),
-              child: ListTile(
-                leading: Icon(Icons.check_box_outline_blank),
-                title: Text('Feed the dog'),
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.only(left: 40.0),
-              child: ListTile(
-                leading: Icon(Icons.check_box_outline_blank),
-                title: Text('Brush the dog'),
-              ),
-            ),
+                padding: const EdgeInsets.only(left: 40.0),
+                child: ListTile(
+                  leading: GestureDetector(
+                    behavior: HitTestBehavior.translucent,
+                    onTap: () { print("Hello");},
+                    child: Container(
+                      width: 48,
+                      height: 48,
+                      padding: const EdgeInsets.symmetric(vertical: 4.0),
+                      alignment: Alignment.center,
+                      child: const CircleAvatar(),
+                    ),
+                  ),
+                  title: const Text('title'),
+                  dense: false,
+                )),
+            
           ],
         ));
   }
