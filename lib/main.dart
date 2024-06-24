@@ -215,12 +215,12 @@ class CenterWidget extends StatelessWidget {
                       height: 48,
                       padding: const EdgeInsets.symmetric(vertical: 4.0),
                       alignment: Alignment.center,
-                      child: const CircleAvatar(),
+                      child: const Icon(Icons.check_box_outline_blank_outlined),
                     ),
                   ),
-                  title: const Text('title'),
+                  title: const Text('Brush Dog'),
                   dense: false,
-                )),
+                ),),
             
           ],
         ));
