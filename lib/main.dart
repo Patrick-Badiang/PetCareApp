@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 
+import 'package:pet_care_app/homepage.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -35,6 +37,16 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int currentPageIndex = 0;
 
+  String homeSubText = "My name is:";
+  String homeTitle = "Kuber Badiang";
+
+  void onNavTap(int index){
+
+    setState(() {
+      currentPageIndex = index;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,13 +60,18 @@ class _MyHomePageState extends State<MyHomePage> {
         selectedIndex: currentPageIndex,
         destinations: const <Widget>[
           NavigationDestination(
+            selectedIcon: Icon(Icons.home),
+            icon: Icon(Icons.home),
+            label: 'Home',
+          ),
+          NavigationDestination(
             selectedIcon: Icon(Icons.calendar_month),
-            icon: Icon(Icons.home_outlined),
+            icon: Icon(Icons.calendar_month),
             label: 'Appointments',
           ),
           NavigationDestination(
             icon: Badge(child: Icon(Icons.list_alt_outlined)),
-            label: 'Taking Care of Pet',
+            label: 'Caring for pet',
           ),
           NavigationDestination(
             icon: Badge(
@@ -65,42 +82,49 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
         ],
       ),
-      body: const Column(
+      body:  <Widget>[
+        Column(
         children: <Widget>[
-          TopWidget(),
-          Expanded(
-            child: CenterWidget(),
+          TopWidget(subText: homeSubText, title: homeTitle),
+          const Expanded(
+            child: HomePage(),
           )
         ],
       ),
+      Text("Appointments Page"),
+      Text("Taking Care Page"),
+      Text("Call Vet Page"),
+      ][currentPageIndex]
     );
   }
 }
 
 class TopWidget extends StatelessWidget {
-  const TopWidget({super.key});
+  final String subText;
+  final String title;
+  const TopWidget({required this.subText, required this.title, super.key} );
   @override
   Widget build(BuildContext context) {
     return Container(
       color: Color.fromARGB(255, 95, 196, 98),
-      child: const Column(
+      child:  Column(
         children: [
-          PrintandCircle(),
+          const PrintandCircle(),
           Text(
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 30,
             ),
             textAlign: TextAlign.center,
-            "My name is:",
+            subText,
           ),
           Padding(
-            padding: EdgeInsets.only(bottom: 15.0),
+            padding: const EdgeInsets.only(bottom: 15.0),
             child: Text(
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 40,
               ),
               textAlign: TextAlign.center,
-              "Kuber Badiang",
+              title,
             ),
           ),
         ],
@@ -186,163 +210,3 @@ class PawPrint extends StatelessWidget {
   }
 }
 
-class CenterWidget extends StatelessWidget {
-  const CenterWidget({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-        width: double.infinity,
-        color: const Color.fromARGB(217, 229, 229, 229),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
-            const Center(child: VetCard()),
-            const Padding(
-              padding: EdgeInsets.only(left: 30.0, top: 30.0),
-              child: Text("Daily Tasks"),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 30.0),
-              child: Card(
-                child: ListTile(
-                  leading: const Icon(Icons.check_box_outline_blank_outlined),
-                  onTap: () {
-                    print("Hello");
-                  },
-                  title: const Text("Feed the Dog"),
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 30.0),
-              child: Card(
-                child: ListTile(
-                  leading: const Icon(Icons.check_box_outline_blank_outlined),
-                  onTap: () {
-                    print("Hello");
-                  },
-                  title: const Text("Walk the Dog"),
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 30.0),
-              child: Card(
-                child: ListTile(
-                  leading: const Icon(Icons.add_box_outlined),
-                  onTap: () {
-                    print("Hello");
-                  },
-                  title: const Opacity(
-                    opacity: 0.6,
-                    child: Text("Add a Task"),
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ));
-  }
-}
-
-class VetCard extends StatelessWidget {
-  const VetCard({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Padding(
-      padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 50.0),
-      child: Card(
-        color: Color.fromARGB(217, 217, 217, 217),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
-            Center(
-              child: Text(
-                'Vetenarian Information',
-                style: TextStyle(
-                  fontSize: 20,
-                ),
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.only(left: 20.0),
-              child: Row(
-                children: [
-                  Text(
-                    textAlign: TextAlign.left,
-                    style: TextStyle(
-                      fontSize: 10,
-                    ),
-                    'Name:',
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(left: 30.0),
-                    child: Text(
-                      textAlign: TextAlign.left,
-                      style: TextStyle(
-                        fontSize: 15,
-                      ),
-                      'Duck Creek Animal Hospital',
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.only(left: 20.0),
-              child: Row(
-                children: [
-                  Text(
-                    textAlign: TextAlign.left,
-                    style: TextStyle(
-                      fontSize: 10,
-                    ),
-                    'Number:',
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(left: 20.0),
-                    child: Text(
-                      textAlign: TextAlign.left,
-                      style: TextStyle(
-                        fontSize: 15,
-                      ),
-                      '(302) 653-2300',
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.only(left: 20.0),
-              child: Row(
-                children: [
-                  Text(
-                    textAlign: TextAlign.left,
-                    style: TextStyle(
-                      fontSize: 10,
-                    ),
-                    'Location:',
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(left: 20.0),
-                    child: Text(
-                      textAlign: TextAlign.left,
-                      style: TextStyle(
-                        fontSize: 15,
-                      ),
-                      'Smryna, DE',
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
