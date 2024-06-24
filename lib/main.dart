@@ -43,74 +43,72 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: NavigationBar(
-        onDestinationSelected: (int index) {
-          setState(() {
-            currentPageIndex = index;
-          });
-        },
-        indicatorColor: Colors.amber,
-        selectedIndex: currentPageIndex,
-        destinations: const <Widget>[
-          NavigationDestination(
-            selectedIcon: Icon(Icons.home),
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          NavigationDestination(
-            selectedIcon: Icon(Icons.calendar_month),
-            icon: Icon(Icons.calendar_month),
-            label: 'Appointments',
-          ),
-          NavigationDestination(
-            icon: Badge(child: Icon(Icons.list_alt_outlined)),
-            label: 'Caring for pet',
-          ),
-          NavigationDestination(
-            icon: Badge(
-              label: Text('2'),
-              child: Icon(Icons.phone_callback),
+        bottomNavigationBar: NavigationBar(
+          onDestinationSelected: (int index) {
+            setState(() {
+              currentPageIndex = index;
+            });
+          },
+          indicatorColor: Colors.amber,
+          selectedIndex: currentPageIndex,
+          destinations: const <Widget>[
+            NavigationDestination(
+              selectedIcon: Icon(Icons.home),
+              icon: Icon(Icons.home),
+              label: 'Home',
             ),
-            label: 'Call Vet',
+            NavigationDestination(
+              selectedIcon: Icon(Icons.calendar_month),
+              icon: Icon(Icons.calendar_month),
+              label: 'Appointments',
+            ),
+            NavigationDestination(
+              icon: Badge(child: Icon(Icons.list_alt_outlined)),
+              label: 'Caring for pet',
+            ),
+            NavigationDestination(
+              icon: Badge(
+                label: Text('2'),
+                child: Icon(Icons.phone_callback),
+              ),
+              label: 'Call Vet',
+            ),
+          ],
+        ),
+        body: const <Widget>[
+          Column(
+            children: <Widget>[
+              TopWidget(subText: "My name is:", title: "Kuber Badiang"),
+              Expanded(
+                child: HomePage(),
+              )
+            ],
           ),
-        ],
-      ),
-      body:  const <Widget>[
-        Column(
-        children: <Widget>[
-          TopWidget(subText: "My name is:", title: "Kuber Badiang"),
-          Expanded(
-            child: HomePage(),
-          )
-        ],
-      ),
-      Column(
-        children: <Widget>[
-          TopWidget(subText: "These are", title: "My Appointments"),
-          Appointments()
-        ],
-      ),
-      Column(
-        children: <Widget>[
-          TopWidget(subText: "", title: "Things to Know"),
-          
-        ],
-      ),
-      Text("Call Vet Page"),
-      ][currentPageIndex]
-    );
+          Column(
+            children: <Widget>[
+              TopWidget(subText: "These are", title: "My Appointments"),
+              Appointments()
+            ],
+          ),
+          Column(
+            children: <Widget>[
+              TopWidget(subText: "", title: "Things to Know"),
+            ],
+          ),
+          Text("Call Vet Page"),
+        ][currentPageIndex]);
   }
 }
 
 class TopWidget extends StatelessWidget {
   final String subText;
   final String title;
-  const TopWidget({required this.subText, required this.title, super.key} );
+  const TopWidget({required this.subText, required this.title, super.key});
   @override
   Widget build(BuildContext context) {
     return Container(
       color: Color.fromARGB(255, 95, 196, 98),
-      child:  Column(
+      child: Column(
         children: [
           const PrintandCircle(),
           Text(
@@ -141,15 +139,15 @@ class PrintandCircle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  const Row(
+    return const Row(
       children: [
-         SizedBox(
+        SizedBox(
           height: 250,
           width: 200,
           child: PawPrint(),
         ),
         Padding(
-          padding:  EdgeInsets.only(left: 8.0, top: 50.0),
+          padding: EdgeInsets.only(left: 8.0, top: 50.0),
           child: CircleAvatar(
             radius: 80,
             backgroundColor: Colors.white,
@@ -219,21 +217,36 @@ class Appointments extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Padding(
-      padding:  EdgeInsets.symmetric(vertical:20.0, horizontal: 30.0),
+      padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 30.0),
       child: Column(
         children: <Widget>[
           Card(
-              child: ListTile(
-                leading: FlutterLogo(),
-                title: Text('One-line with leading widget'),
+            child: ListTile(
+              leading: FlutterLogo(size: 56.0,),
+              title: Text(
+                style: TextStyle(
+                  fontSize: 20,
+                ),
+                'Rabbies Shot TBD'),
+              
+            ),
+          ),
+          Card(
+            child: ListTile(
+              
+              leading: FlutterLogo(),
+              title: Text('Nail Clippings'),
+            ),
+          ),
+          Card(
+            child: ListTile(
+              leading: FlutterLogo(),
+              title: Opacity(
+                opacity: 0.6,
+                child: Text('Add an Appointment'),
               ),
             ),
-            Card(
-              child: ListTile(
-                leading: FlutterLogo(),
-                title: Text('One-line with leading widget'),
-              ),
-            ),
+          ),
         ],
       ),
     );
