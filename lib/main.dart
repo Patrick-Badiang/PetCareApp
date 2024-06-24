@@ -87,7 +87,7 @@ class _MyHomePageState extends State<MyHomePage> {
       Column(
         children: <Widget>[
           TopWidget(subText: "These are", title: "My Appointments"),
-          
+          Appointments()
         ],
       ),
       Column(
@@ -213,3 +213,29 @@ class PawPrint extends StatelessWidget {
   }
 }
 
+class Appointments extends StatelessWidget {
+  const Appointments({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Padding(
+      padding:  EdgeInsets.symmetric(vertical:20.0, horizontal: 30.0),
+      child: Column(
+        children: <Widget>[
+          Card(
+              child: ListTile(
+                leading: FlutterLogo(),
+                title: Text('One-line with leading widget'),
+              ),
+            ),
+            Card(
+              child: ListTile(
+                leading: FlutterLogo(),
+                title: Text('One-line with leading widget'),
+              ),
+            ),
+        ],
+      ),
+    );
+  }
+}
