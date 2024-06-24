@@ -40,13 +40,6 @@ class _MyHomePageState extends State<MyHomePage> {
   String homeSubText = "My name is:";
   String homeTitle = "Kuber Badiang";
 
-  void onNavTap(int index){
-
-    setState(() {
-      currentPageIndex = index;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -82,17 +75,27 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
         ],
       ),
-      body:  <Widget>[
+      body:  const <Widget>[
         Column(
         children: <Widget>[
-          TopWidget(subText: homeSubText, title: homeTitle),
-          const Expanded(
+          TopWidget(subText: "My name is:", title: "Kuber Badiang"),
+          Expanded(
             child: HomePage(),
           )
         ],
       ),
-      Text("Appointments Page"),
-      Text("Taking Care Page"),
+      Column(
+        children: <Widget>[
+          TopWidget(subText: "These are", title: "My Appointments"),
+          
+        ],
+      ),
+      Column(
+        children: <Widget>[
+          TopWidget(subText: "", title: "Things to Know"),
+          
+        ],
+      ),
       Text("Call Vet Page"),
       ][currentPageIndex]
     );
