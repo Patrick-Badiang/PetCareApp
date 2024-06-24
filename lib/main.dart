@@ -82,7 +82,7 @@ class TopWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.green,
+      color: Color.fromARGB(255, 95, 196, 98),
       child: const Column(
         children: [
           PrintandCircle(),
@@ -114,19 +114,19 @@ class PrintandCircle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Row(
+    return  const Row(
       children: [
-        SizedBox(
+         SizedBox(
           height: 250,
           width: 200,
           child: PawPrint(),
         ),
         Padding(
-          padding: EdgeInsets.only(left: 8.0, top: 50.0),
+          padding:  EdgeInsets.only(left: 8.0, top: 50.0),
           child: CircleAvatar(
             radius: 80,
             backgroundColor: Colors.white,
-            child: Icon(Icons.pets, size: 100, color: Colors.brown),
+            backgroundImage: AssetImage("assets/images/Pet.png"),
           ),
         ),
       ],
@@ -203,25 +203,45 @@ class CenterWidget extends StatelessWidget {
               padding: EdgeInsets.only(left: 30.0, top: 30.0),
               child: Text("Daily Tasks"),
             ),
-            
             Padding(
-                padding: const EdgeInsets.only(left: 40.0),
+              padding: const EdgeInsets.symmetric(horizontal: 30.0),
+              child: Card(
                 child: ListTile(
-                  leading: GestureDetector(
-                    behavior: HitTestBehavior.translucent,
-                    onTap: () { print("Hello");},
-                    child: Container(
-                      width: 48,
-                      height: 48,
-                      padding: const EdgeInsets.symmetric(vertical: 4.0),
-                      alignment: Alignment.center,
-                      child: const Icon(Icons.check_box_outline_blank_outlined),
-                    ),
+                  leading: const Icon(Icons.check_box_outline_blank_outlined),
+                  onTap: () {
+                    print("Hello");
+                  },
+                  title: const Text("Feed the Dog"),
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 30.0),
+              child: Card(
+                child: ListTile(
+                  leading: const Icon(Icons.check_box_outline_blank_outlined),
+                  onTap: () {
+                    print("Hello");
+                  },
+                  title: const Text("Walk the Dog"),
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 30.0),
+              child: Card(
+                child: ListTile(
+                  leading: const Icon(Icons.add_box_outlined),
+                  onTap: () {
+                    print("Hello");
+                  },
+                  title: const Opacity(
+                    opacity: 0.6,
+                    child: Text("Add a Task"),
                   ),
-                  title: const Text('Brush Dog'),
-                  dense: false,
-                ),),
-            
+                ),
+              ),
+            ),
           ],
         ));
   }
