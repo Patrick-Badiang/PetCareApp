@@ -50,21 +50,24 @@ class TaskTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 80,
-      decoration: BoxDecoration(
-        color: boxColor,
-      ),
-      child: Row(
-        children: [
-          //Check Box
-          Checkbox(
-            value: isDone,
-            onChanged: onChanged,
-          ),
-          //Task Name
-          Text(taskName),
-        ],
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 40.0),
+      child: Container(
+        height: 50,
+        decoration: BoxDecoration(
+          color: boxColor,
+        ),
+        child: Row(
+          children: [
+            //Check Box
+            Checkbox(
+              value: isDone,
+              onChanged: onChanged,
+            ),
+            //Task Name
+            Text(taskName),
+          ],
+        ),
       ),
     );
   }

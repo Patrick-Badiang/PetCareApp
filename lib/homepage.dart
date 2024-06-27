@@ -22,20 +22,16 @@ class _HomePageState extends State<HomePage> {
     ["Feed the dog", false, Color(0xffCA7676)],
   ];
 
-  void _getTasks() {
-    tasks = TaskModel.getTasks();
-    print(tasks[1].boxColor);
-  }
+  
 
   void _taskClicked(bool? value, int index) {
     setState(() {
-      tasks[index].isDone = !tasks[index].isDone;
+      _tasks[index][1] = !_tasks[index][1];
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    _getTasks();
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.start,
@@ -59,10 +55,11 @@ class _HomePageState extends State<HomePage> {
             separatorBuilder: (context, index) => SizedBox(height: 10),
             itemBuilder: (context, index) {
               return TaskTile(
-                  taskName: _tasks[index][0],
-                  isDone: _tasks[index][1],
-                  onChanged: (value) => _taskClicked(value, index),
-                  boxColor: _tasks[index][2]);
+                    taskName: _tasks[index][0],
+                    isDone: _tasks[index][1],
+                    onChanged: (value) => _taskClicked(value, index),
+                    boxColor: _tasks[index][2],
+              );
             },
           ),
         ),
