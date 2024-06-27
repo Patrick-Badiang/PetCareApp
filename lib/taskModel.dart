@@ -38,14 +38,12 @@ class TaskModel {
 class TaskTile extends StatelessWidget {
   final String taskName;
   final bool isDone;
-  final Color boxColor;
   final Function(bool?)? onChanged;
 
   const TaskTile({
     required this.taskName,
     required this.isDone,
     required this.onChanged,
-    required this.boxColor,
   });
 
   @override
@@ -54,18 +52,27 @@ class TaskTile extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 40.0),
       child: Container(
         height: 50,
-        decoration: BoxDecoration(
-          color: boxColor,
-        ),
         child: Row(
           children: [
             //Check Box
             Checkbox(
+              focusColor: Color(0xffFFFAFA),
               value: isDone,
               onChanged: onChanged,
+              activeColor: Colors.black,
             ),
+
             //Task Name
-            Text(taskName),
+            Container(
+                height: 30,
+                width: 300,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(15),
+                  color: Colors.white,
+                ),
+                child: Text(taskName),
+                ),
           ],
         ),
       ),

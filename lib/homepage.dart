@@ -58,7 +58,6 @@ class _HomePageState extends State<HomePage> {
                     taskName: _tasks[index][0],
                     isDone: _tasks[index][1],
                     onChanged: (value) => _taskClicked(value, index),
-                    boxColor: _tasks[index][2],
               );
             },
           ),
