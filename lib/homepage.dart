@@ -28,9 +28,9 @@ class _HomePageState extends State<HomePage> {
   }
 
   void _taskClicked(bool? value, int index) {
-    // setState(() {
-    //   tasks[index].isDone = !tasks[index].isDone;
-    // });
+    setState(() {
+      tasks[index].isDone = !tasks[index].isDone;
+    });
   }
 
   @override
