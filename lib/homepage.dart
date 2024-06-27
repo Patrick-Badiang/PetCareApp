@@ -16,9 +16,21 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   List<TaskModel> tasks = [];
 
+  List _tasks = [
+    ["Walk  the dog", false, Color(0xffCA7676)],
+    ["Brush the dog", true, Color(0xffCAA376)],
+    ["Feed the dog", false, Color(0xffCA7676)],
+  ];
+
   void _getTasks() {
     tasks = TaskModel.getTasks();
     print(tasks[1].boxColor);
+  }
+
+  void _taskClicked(bool? value, int index) {
+    // setState(() {
+    //   tasks[index].isDone = !tasks[index].isDone;
+    // });
   }
 
   @override
@@ -28,9 +40,10 @@ class _HomePageState extends State<HomePage> {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.start,
       children: <Widget>[
-        // TopWidget(subText: "My Name is:", title: "Kuber Badiang"),
+        TopWidget(subText: "My Name is:", title: "Kuber Badiang"),
+        SizedBox(height: 20),
         const Center(child: VetCard()),
-        const SizedBox(height: 40),
+        const SizedBox(height: 30),
         const Padding(
           padding: EdgeInsets.only(left: 30.0),
           child: Text("Daily Tasks"),
@@ -38,23 +51,19 @@ class _HomePageState extends State<HomePage> {
         const SizedBox(height: 15),
         Expanded(
           // Wrap the Container in an Expanded widget
-          
-            child: ListView.separated(
-              padding: EdgeInsets.zero,
-              shrinkWrap: true,
-              scrollDirection: Axis.vertical,
-              itemCount: tasks.length,
-              separatorBuilder: (context, index) => SizedBox(width: 25),
-              itemBuilder: (context, index) {
-                return Container(
-                  height: 100,
-                  width: 100,
-                  decoration: BoxDecoration(
-                    color: tasks[index].boxColor,
-                  ),
-                );
-              },
-            
+          child: ListView.separated(
+            padding: EdgeInsets.zero,
+            shrinkWrap: true,
+            scrollDirection: Axis.vertical,
+            itemCount: _tasks.length,
+            separatorBuilder: (context, index) => SizedBox(height: 10),
+            itemBuilder: (context, index) {
+              return TaskTile(
+                  taskName: _tasks[index][0],
+                  isDone: _tasks[index][1],
+                  onChanged: (value) => _taskClicked(value, index),
+                  boxColor: _tasks[index][2]);
+            },
           ),
         ),
 
@@ -90,7 +99,7 @@ class VetCard extends StatelessWidget {
       decoration: BoxDecoration(
           color: Color.fromARGB(217, 217, 217, 217),
           borderRadius: BorderRadius.circular(15)),
-      child: Column(
+      child: const Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[

@@ -7,11 +7,11 @@ import 'package:flutter/cupertino.dart';
 
 class TaskModel {
   final String taskName;
-  final bool isDone;
+  bool isDone;
   final Color boxColor;
   // final Function(bool?)? onChanged;
 
-  const TaskModel({
+  TaskModel({
     required this.taskName,
     required this.isDone,
     // required this.onChanged,
@@ -21,31 +21,51 @@ class TaskModel {
   static List<TaskModel> getTasks() {
     List<TaskModel> tasks = [];
 
-    tasks.add(
-      const TaskModel(
-        taskName: "Walk the Dog",
-        isDone: false,
-        boxColor: Color(0xffCA7676)));
-    tasks.add(
-      const TaskModel(
-        taskName: "Brush the Dog",
-        isDone: false,
-        boxColor: Color(0xffCAA376)));
-    tasks.add(
-      const TaskModel(
-        taskName: "Feed the Dog",
-        isDone: false,
-        boxColor: Color(0xffCA7676)));
-    tasks.add(
-      const TaskModel(
-        taskName: "Brush the Dog",
-        isDone: false,
-        boxColor: Color(0xffCAA376)));
-    tasks.add(
-      const TaskModel(
-        taskName: "Walk the Dog",
-        isDone: false,
-        boxColor: Color(0xffCA7676)));
+    tasks.add(TaskModel(
+        taskName: "Walk the Dog", isDone: false, boxColor: Color(0xffCA7676)));
+    tasks.add(TaskModel(
+        taskName: "Brush the Dog", isDone: false, boxColor: Color(0xffCAA376)));
+    tasks.add(TaskModel(
+        taskName: "Feed the Dog", isDone: false, boxColor: Color(0xffCA7676)));
+    tasks.add(TaskModel(
+        taskName: "Brush the Dog", isDone: false, boxColor: Color(0xffCAA376)));
+    tasks.add(TaskModel(
+        taskName: "Walk the Dog", isDone: false, boxColor: Color(0xffCA7676)));
     return tasks;
+  }
+}
+
+class TaskTile extends StatelessWidget {
+  final String taskName;
+  final bool isDone;
+  final Color boxColor;
+  final Function(bool?)? onChanged;
+
+  const TaskTile({
+    required this.taskName,
+    required this.isDone,
+    required this.onChanged,
+    required this.boxColor,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 80,
+      decoration: BoxDecoration(
+        color: boxColor,
+      ),
+      child: Row(
+        children: [
+          //Check Box
+          Checkbox(
+            value: isDone,
+            onChanged: onChanged,
+          ),
+          //Task Name
+          Text(taskName),
+        ],
+      ),
+    );
   }
 }
