@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 
+import 'package:pet_care_app/taskTile.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -12,7 +13,7 @@ class HomePage extends StatelessWidget {
     return Container(
         width: double.infinity,
         color: const Color.fromARGB(217, 229, 229, 229),
-        child: Column(
+        child:  const Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
@@ -21,47 +22,64 @@ class HomePage extends StatelessWidget {
               padding: EdgeInsets.only(left: 30.0, top: 30.0),
               child: Text("Daily Tasks"),
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 30.0),
-              child: Card(
-                child: ListTile(
-                  leading: const Icon(Icons.check_box_outline_blank_outlined),
-                  onTap: () {
-                    print("Hello");
-                  },
-                  title: const Text("Feed the Dog"),
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 30.0),
-              child: Card(
-                child: ListTile(
-                  leading: const Icon(Icons.check_box_outline_blank_outlined),
-                  onTap: () {
-                    print("Hello");
-                  },
-                  title: const Text("Walk the Dog"),
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 30.0),
-              child: Card(
-                child: ListTile(
-                  leading: const Icon(Icons.add_box_outlined),
-                  onTap: () {
-                    print("Hello");
-                  },
-                  title: const Opacity(
-                    opacity: 0.6,
-                    child: Text("Add a Task"),
-                  ),
-                ),
-              ),
-            ),
+            Flexible(
+              fit: FlexFit.tight,
+              child: DailyTasks()),
+            // const DailyTasks(),
+            // Padding(
+            //   padding: const EdgeInsets.symmetric(horizontal: 30.0),
+            //   child: Card(
+            //     child: ListTile(
+            //       leading: const Icon(Icons.add_box_outlined),
+            //       onTap: () {
+            //         print("Hello");
+            //       },
+            //       title: const Opacity(
+            //         opacity: 0.6,
+            //         child: Text("Add a Task"),
+            //       ),
+            //     ),
+            //   ),
+            // ),
           ],
         ));
+  }
+}
+
+class DailyTasks extends StatefulWidget {
+  const DailyTasks({super.key});
+
+  @override
+  State<DailyTasks> createState() => _DailyTasksState();
+}
+
+class _DailyTasksState extends State<DailyTasks> {
+  List tasks = [
+    ["Test", false],
+    ["Test2", true],
+    ["Test3", true],
+    
+
+
+  ];
+
+  void checkBoxChanged(bool? value, int index) {
+    setState(() {
+      tasks[index][1] = !tasks[index][1];
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 200,
+      child: ListView.builder(
+        itemCount: tasks.length,
+        itemBuilder: (context, index) {
+          return Container(height: 10,  color: Colors.black,);
+        },
+      ),
+    );
   }
 }
 

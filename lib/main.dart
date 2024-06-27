@@ -79,9 +79,7 @@ class _MyHomePageState extends State<MyHomePage> {
           Column(
             children: <Widget>[
               TopWidget(subText: "My name is:", title: "Kuber Badiang"),
-              Expanded(
-                child: HomePage(),
-              )
+              HomePage(),
             ],
           ),
           Column(
@@ -118,15 +116,12 @@ class TopWidget extends StatelessWidget {
             textAlign: TextAlign.center,
             subText,
           ),
-          Padding(
-            padding: const EdgeInsets.only(bottom: 15.0),
-            child: Text(
-              style: const TextStyle(
-                fontSize: 40,
-              ),
-              textAlign: TextAlign.center,
-              title,
+          Text(
+            style: const TextStyle(
+              fontSize: 40,
             ),
+            textAlign: TextAlign.center,
+            title,
           ),
         ],
       ),
@@ -141,19 +136,25 @@ class PrintandCircle extends StatelessWidget {
   Widget build(BuildContext context) {
     return const Row(
       children: [
-        SizedBox(
-          height: 250,
-          width: 200,
-          child: PawPrint(),
-        ),
-        Padding(
-          padding: EdgeInsets.only(left: 8.0, top: 50.0),
-          child: CircleAvatar(
-            radius: 80,
-            backgroundColor: Colors.white,
-            backgroundImage: AssetImage("assets/images/Pet.png"),
+        Flexible(
+          flex: 1,
+          child: SizedBox(
+            height: 250,
+            width: 200,
+            child: PawPrint(),
           ),
         ),
+        Flexible(
+          flex: 1,
+          child: Padding(
+            padding: EdgeInsets.only(left: 8.0, top: 50.0),
+            child: CircleAvatar(
+              radius: 80,
+              backgroundColor: Colors.white,
+              backgroundImage: AssetImage("assets/images/Pet.png"),
+            ),
+          ),
+        )
       ],
     );
   }
@@ -222,18 +223,18 @@ class Appointments extends StatelessWidget {
         children: <Widget>[
           Card(
             child: ListTile(
-              leading: FlutterLogo(size: 56.0,),
+              leading: FlutterLogo(
+                size: 56.0,
+              ),
               title: Text(
-                style: TextStyle(
-                  fontSize: 20,
-                ),
-                'Rabbies Shot TBD'),
-              
+                  style: TextStyle(
+                    fontSize: 20,
+                  ),
+                  'Rabbies Shot TBD'),
             ),
           ),
           Card(
             child: ListTile(
-              
               leading: FlutterLogo(),
               title: Text('Nail Clippings'),
             ),
