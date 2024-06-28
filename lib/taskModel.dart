@@ -55,25 +55,36 @@ class TaskTile extends StatelessWidget {
         child: Row(
           children: [
             //Check Box
+
             Checkbox(
-              focusColor: Color(0xffFFFAFA),
+              focusColor: Colors.white,
               value: isDone,
               onChanged: onChanged,
-              activeColor: Colors.black,
+              activeColor: Colors.white,
+              checkColor: Colors.black,
             ),
 
             //Task Name
             Container(
-                height: 30,
-                width: 300,
-                alignment: Alignment.centerLeft,
-                padding: const EdgeInsets.only(left:10.0),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(15),
-                  color: Color(0XFFD9D9D9),
+              height: 40,
+              width: 300,
+              alignment: Alignment.centerLeft,
+              padding: const EdgeInsets.only(left: 10.0),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(40),
+                color: Color(0XFFD9D9D9),
+              ),
+              child: Text(
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  decoration:
+                      isDone 
+                        ? TextDecoration.lineThrough 
+                        : TextDecoration.none,
                 ),
-                child: Text(taskName),
-                ),
+                taskName,
+              ),
+            ),
           ],
         ),
       ),
