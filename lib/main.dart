@@ -38,31 +38,16 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
 
-  //Text controller
-  final _controller = TextEditingController();
-
   int currentPageIndex = 0;
 
-  void _addTask() {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return DialogBox(controller: _controller,);
-      },
-    );
-  }
+  
+
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        floatingActionButton: FloatingActionButton.small(
-          shape: CircleBorder(),
-          backgroundColor: Colors.green,
-          onPressed: () {
-            _addTask();
-          },
-          child: Icon(Icons.add),
-        ),
+        
         backgroundColor: Color(0xffE5E5E5),
         bottomNavigationBar: NavigationBar(
           onDestinationSelected: (int index) {

@@ -3,9 +3,15 @@ import 'package:pet_care_app/utils/my_button.dart';
 
 class DialogBox extends StatelessWidget {
   final controller;
-  const DialogBox({
+  VoidCallback onAdd;
+  VoidCallback onCancel;
+
+
+  DialogBox({
     super.key,
     required this.controller,
+    required  this.onAdd,
+    required this.onCancel,
   });
 
   @override
@@ -28,9 +34,9 @@ class DialogBox extends StatelessWidget {
               //Add Button and a Cancel Button
               Row(
                 children: [
-                  MyButton(text: "Add", onPressed: () {}),
+                  MyButton(text: "Add", onPressed: onAdd),
                   const Spacer(),
-                  MyButton(text: "Cancel", onPressed: () {}),
+                  MyButton(text: "Cancel", onPressed: onCancel),
                 ],
               )
             ],
