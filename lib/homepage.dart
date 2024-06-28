@@ -47,6 +47,7 @@ class _HomePageState extends State<HomePage> {
     setState(() {
       _tasks.add([_controller.text, false]);
     });
+     Navigator.of(context).pop();
   }
 
   @override
@@ -55,7 +56,9 @@ class _HomePageState extends State<HomePage> {
       floatingActionButton: FloatingActionButton.small(
         shape: CircleBorder(),
         backgroundColor: Colors.green,
-        onPressed: () {},
+        onPressed: () {
+          _addTask();
+        },
         child: Icon(Icons.add),
       ),
       body: Column(
