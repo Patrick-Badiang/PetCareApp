@@ -37,13 +37,17 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+
+  //Text controller
+  final _controller = TextEditingController();
+
   int currentPageIndex = 0;
 
   void _addTask() {
     showDialog(
       context: context,
       builder: (context) {
-        return const DialogBox();
+        return DialogBox(controller: _controller,);
       },
     );
   }
