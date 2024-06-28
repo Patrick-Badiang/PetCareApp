@@ -5,6 +5,7 @@ import 'package:flutter/widgets.dart';
 
 import 'package:pet_care_app/homepage.dart';
 import 'package:pet_care_app/topWidget.dart';
+import 'package:pet_care_app/utils/dialog_box.dart';
 
 void main() {
   runApp(const MyApp());
@@ -38,10 +39,26 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int currentPageIndex = 0;
 
+  void _addTask() {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return const DialogBox();
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        floatingActionButton: FloatingActionButton.small(
+          shape: CircleBorder(),
+          backgroundColor: Colors.green,
+          onPressed: () {
+            _addTask();
+          },
+          child: Icon(Icons.add),
+        ),
         backgroundColor: Color(0xffE5E5E5),
         bottomNavigationBar: NavigationBar(
           onDestinationSelected: (int index) {
@@ -76,12 +93,11 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         ),
         body: [
-          
-              HomePage(),
-              HomePage(),
-              HomePage(),
-              HomePage(),
-          
+          HomePage(),
+          HomePage(),
+          HomePage(),
+          HomePage(),
+
           // const Column(
           //   children: <Widget>[
           //     TopWidget(subText: "These are", title: "My Appointments"),
@@ -97,9 +113,6 @@ class _MyHomePageState extends State<MyHomePage> {
         ][currentPageIndex]);
   }
 }
-
-
-
 
 class Appointments extends StatelessWidget {
   const Appointments({super.key});
