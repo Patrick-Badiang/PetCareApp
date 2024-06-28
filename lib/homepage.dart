@@ -19,7 +19,7 @@ class _HomePageState extends State<HomePage> {
   final _controller = TextEditingController();
 
   List _tasks = [
-    ["Walk  the dog", false],
+    ["Walk", false],
     ["Brush the dog", true],
     ["Feed the dog", false],
   ];

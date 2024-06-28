@@ -6,36 +6,6 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
-class TaskModel {
-  final String taskName;
-  bool isDone;
-  final Color boxColor;
-  // final Function(bool?)? onChanged;
-
-  TaskModel({
-    required this.taskName,
-    required this.isDone,
-    // required this.onChanged,
-    required this.boxColor,
-  });
-
-  static List<TaskModel> getTasks() {
-    List<TaskModel> tasks = [];
-
-    tasks.add(TaskModel(
-        taskName: "Walk the Dog", isDone: false, boxColor: Color(0xffCA7676)));
-    tasks.add(TaskModel(
-        taskName: "Brush the Dog", isDone: false, boxColor: Color(0xffCAA376)));
-    tasks.add(TaskModel(
-        taskName: "Feed the Dog", isDone: false, boxColor: Color(0xffCA7676)));
-    tasks.add(TaskModel(
-        taskName: "Brush the Dog", isDone: false, boxColor: Color(0xffCAA376)));
-    tasks.add(TaskModel(
-        taskName: "Walk the Dog", isDone: false, boxColor: Color(0xffCA7676)));
-    return tasks;
-  }
-}
-
 class TaskTile extends StatelessWidget {
   final String taskName;
   final bool isDone;
@@ -89,14 +59,25 @@ class TaskTile extends StatelessWidget {
                   borderRadius: BorderRadius.circular(40),
                   color: Color(0XFFD9D9D9),
                 ),
-                child: Text(
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    decoration: isDone
-                        ? TextDecoration.lineThrough
-                        : TextDecoration.none,
-                  ),
-                  taskName,
+                child: Row(
+                  children: [
+                    Text(
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        decoration: isDone
+                            ? TextDecoration.lineThrough
+                            : TextDecoration.none,
+                      ),
+                      taskName,
+                    ),
+                    Spacer(),
+                    Container(
+                        child: isDone
+                            ? IconButton(
+                                onPressed: () => onDelete?.call(context),
+                                icon: Icon(Icons.delete))
+                            : null),
+                  ],
                 ),
               ),
             ),
