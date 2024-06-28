@@ -50,6 +50,13 @@ class _HomePageState extends State<HomePage> {
      Navigator.of(context).pop();
   }
 
+  void deleteTask( int index){
+    setState((){
+    _tasks.removeAt(index);
+
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -84,9 +91,11 @@ class _HomePageState extends State<HomePage> {
               separatorBuilder: (context, index) => SizedBox(height: 10),
               itemBuilder: (context, index) {
                 return TaskTile(
+                  
                   taskName: _tasks[index][0],
                   isDone: _tasks[index][1],
                   onChanged: (value) => _taskClicked(value, index),
+                  onDelete: (context) => deleteTask(index),
                 );
               },
             ),

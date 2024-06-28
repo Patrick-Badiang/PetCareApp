@@ -4,6 +4,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 
 class TaskModel {
   final String taskName;
@@ -38,12 +39,14 @@ class TaskModel {
 class TaskTile extends StatelessWidget {
   final String taskName;
   final bool isDone;
-  final Function(bool?)? onChanged;
+  Function(bool?)? onChanged;
+  Function(BuildContext?)? onDelete;
 
-  const TaskTile({
+  TaskTile({
     required this.taskName,
     required this.isDone,
     required this.onChanged,
+    required this.onDelete,
   });
 
   @override
@@ -65,24 +68,36 @@ class TaskTile extends StatelessWidget {
             ),
 
             //Task Name
-            Container(
-              height: 40,
-              width: 300,
-              alignment: Alignment.centerLeft,
-              padding: const EdgeInsets.only(left: 10.0),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(40),
-                color: Color(0XFFD9D9D9),
+            Slidable(
+              endActionPane: ActionPane(
+                motion: StretchMotion(),
+                children: [
+                  SlidableAction(
+                    onPressed: onDelete,
+                    icon: Icons.delete,
+                    backgroundColor: Colors.red,
+                    borderRadius: BorderRadius.circular(10),
+                  )
+                ],
               ),
-              child: Text(
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  decoration:
-                      isDone 
-                        ? TextDecoration.lineThrough 
-                        : TextDecoration.none,
+              child: Container(
+                height: 40,
+                width: 300,
+                alignment: Alignment.centerLeft,
+                padding: const EdgeInsets.only(left: 10.0),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(40),
+                  color: Color(0XFFD9D9D9),
                 ),
-                taskName,
+                child: Text(
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    decoration: isDone
+                        ? TextDecoration.lineThrough
+                        : TextDecoration.none,
+                  ),
+                  taskName,
+                ),
               ),
             ),
           ],
