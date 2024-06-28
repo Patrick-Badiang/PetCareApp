@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:pet_care_app/utils/my_button.dart';
 
 class DialogBox extends StatelessWidget {
-  const DialogBox({super.key});
+  final controller;
+  const DialogBox({
+    super.key,
+    required this.controller,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -20,6 +25,13 @@ class DialogBox extends StatelessWidget {
               ),
 
               //Add Button and a Cancel Button
+              Row(
+                children: [
+                  MyButton(text: "Add", onPressed: () {}),
+                  const Spacer(),
+                  MyButton(text: "Cancel", onPressed: () {}),
+                ],
+              )
             ],
           )),
     );
