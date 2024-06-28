@@ -22,8 +22,6 @@ class _HomePageState extends State<HomePage> {
     ["Feed the dog", false, Color(0xffCA7676)],
   ];
 
-  
-
   void _taskClicked(bool? value, int index) {
     setState(() {
       _tasks[index][1] = !_tasks[index][1];
@@ -55,9 +53,9 @@ class _HomePageState extends State<HomePage> {
             separatorBuilder: (context, index) => SizedBox(height: 10),
             itemBuilder: (context, index) {
               return TaskTile(
-                    taskName: _tasks[index][0],
-                    isDone: _tasks[index][1],
-                    onChanged: (value) => _taskClicked(value, index),
+                taskName: _tasks[index][0],
+                isDone: _tasks[index][1],
+                onChanged: (value) => _taskClicked(value, index),
               );
             },
           ),
@@ -91,7 +89,7 @@ class VetCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 400,
+      width: 300,
       decoration: BoxDecoration(
           color: Color.fromARGB(217, 217, 217, 217),
           borderRadius: BorderRadius.circular(15)),
@@ -99,6 +97,7 @@ class VetCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
+          SizedBox(height: 10),
           Center(
             child: Text(
               'Vetenarian Information',
@@ -107,6 +106,7 @@ class VetCard extends StatelessWidget {
               ),
             ),
           ),
+          SizedBox(height: 10),
           Padding(
             padding: EdgeInsets.only(left: 20.0),
             child: Row(
@@ -131,6 +131,7 @@ class VetCard extends StatelessWidget {
               ],
             ),
           ),
+          SizedBox(height: 10),
           Padding(
             padding: EdgeInsets.only(left: 20.0),
             child: Row(
@@ -155,6 +156,7 @@ class VetCard extends StatelessWidget {
               ],
             ),
           ),
+          SizedBox(height: 10),
           Padding(
             padding: EdgeInsets.only(left: 20.0),
             child: Row(
@@ -179,6 +181,7 @@ class VetCard extends StatelessWidget {
               ],
             ),
           ),
+          SizedBox(height: 10),
         ],
       ),
     );

@@ -66,10 +66,11 @@ class TaskTile extends StatelessWidget {
             Container(
                 height: 30,
                 width: 300,
-                alignment: Alignment.center,
+                alignment: Alignment.centerLeft,
+                padding: const EdgeInsets.only(left:10.0),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(15),
-                  color: Colors.white,
+                  color: Color(0XFFD9D9D9),
                 ),
                 child: Text(taskName),
                 ),
