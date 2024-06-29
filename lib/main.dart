@@ -92,7 +92,7 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
         body: [
           HomePage(),
-          HomePage(),
+          Appointments(),
           HomePage(),
           HomePage(),
 
