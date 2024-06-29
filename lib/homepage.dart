@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
+import 'package:hive/hive.dart';
+import 'package:pet_care_app/data/database.dart';
 
 import 'package:pet_care_app/taskModel.dart';
 import 'package:pet_care_app/topWidget.dart';
@@ -15,19 +17,42 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  
+  //reference  hive box
+  final _myBox = Hive.box('mybox');
+  ToDoDatabase db = ToDoDatabase();
+  
+
+
   //Text Controller
   final _controller = TextEditingController();
 
-  List _tasks = [
-    ["Walk", false],
-    ["Brush the dog", true],
-    ["Feed the dog", false],
-  ];
+  void initState(){
+    super.initState();
+
+    initApp();
+
+
+  }
+
+  void initApp() async {
+  // If this is the first time opening the app then create default values
+  if (_myBox.get("TASKS") == null) {
+    print("Initial DB");
+    db.createInitialData();
+  } else {
+    print("Have already DB");
+    // There already exists data
+    db.loadData();
+  }
+}
 
   void _taskClicked(bool? value, int index) {
     setState(() {
-      _tasks[index][1] = !_tasks[index][1];
+      db.tasks[index][1] = !db.tasks[index][1];
     });
+
+    db.updateDataBase();
   }
 
   void _addTask() {
@@ -45,14 +70,14 @@ class _HomePageState extends State<HomePage> {
 
   void saveNewTask() {
     setState(() {
-      _tasks.add([_controller.text, false]);
+      db.tasks.add([_controller.text, false]);
     });
      Navigator.of(context).pop();
   }
 
   void deleteTask( int index){
     setState((){
-    _tasks.removeAt(index);
+    db.tasks.removeAt(index);
 
     });
   }
@@ -87,13 +112,13 @@ class _HomePageState extends State<HomePage> {
               padding: EdgeInsets.zero,
               shrinkWrap: true,
               scrollDirection: Axis.vertical,
-              itemCount: _tasks.length,
+              itemCount: db.tasks.length,
               separatorBuilder: (context, index) => SizedBox(height: 10),
               itemBuilder: (context, index) {
                 return TaskTile(
                   
-                  taskName: _tasks[index][0],
-                  isDone: _tasks[index][1],
+                  taskName: db.tasks[index][0],
+                  isDone: db.tasks[index][1],
                   onChanged: (value) => _taskClicked(value, index),
                   onDelete: (context) => deleteTask(index),
                 );

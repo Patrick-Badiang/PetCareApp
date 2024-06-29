@@ -2,12 +2,21 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 import 'package:pet_care_app/homepage.dart';
 import 'package:pet_care_app/topWidget.dart';
 import 'package:pet_care_app/utils/dialog_box.dart';
 
-void main() {
+void main() async {
+
+  //init hive
+  await Hive.initFlutter();
+
+  //open a box
+  var box = await Hive.openBox('mybox');
+
+
   runApp(const MyApp());
 }
 
