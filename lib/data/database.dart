@@ -26,7 +26,6 @@ class ToDoDatabase {
 
   //update database
   void updateDataBase(){
-    print('updated');
     _myBox.put("TASKS", tasks);
   }
 }
