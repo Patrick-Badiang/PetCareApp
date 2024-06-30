@@ -1,7 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/widgets.dart';
 import 'package:hive/hive.dart';
 import 'package:pet_care_app/data/database.dart';
 
@@ -10,7 +7,7 @@ import 'package:pet_care_app/topWidget.dart';
 import 'package:pet_care_app/utils/dialog_box.dart';
 
 class HomePage extends StatefulWidget {
-  HomePage({super.key});
+  const HomePage({super.key});
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -27,6 +24,7 @@ class _HomePageState extends State<HomePage> {
   //Text Controller
   final _controller = TextEditingController();
 
+  @override
   void initState(){
     super.initState();
 
@@ -38,10 +36,8 @@ class _HomePageState extends State<HomePage> {
   void initApp() async {
   // If this is the first time opening the app then create default values
   if (_myBox.get("TASKS") == null) {
-    print("Initial DB");
     db.createInitialData();
   } else {
-    print("Have already DB");
     // There already exists data
     db.loadData();
   }
@@ -86,19 +82,19 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton.small(
-        shape: CircleBorder(),
+        shape: const CircleBorder(),
         backgroundColor: Colors.green,
         onPressed: () {
           _addTask();
         },
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
-          TopWidget(subText: "My Name is:", title: "Kuber Badiang"),
-          SizedBox(height: 20),
+          const TopWidget(subText: "My Name is:", title: "Kuber Badiang"),
+          const SizedBox(height: 20),
           const Center(child: VetCard()),
           const SizedBox(height: 30),
           const Padding(
@@ -113,7 +109,7 @@ class _HomePageState extends State<HomePage> {
               shrinkWrap: true,
               scrollDirection: Axis.vertical,
               itemCount: db.tasks.length,
-              separatorBuilder: (context, index) => SizedBox(height: 10),
+              separatorBuilder: (context, index) => const SizedBox(height: 10),
               itemBuilder: (context, index) {
                 return TaskTile(
                   
@@ -125,24 +121,6 @@ class _HomePageState extends State<HomePage> {
               },
             ),
           ),
-
-          // DailyTasks(),
-          // const DailyTasks(),
-          // Padding(
-          //   padding: const EdgeInsets.symmetric(horizontal: 30.0),
-          //   child: Card(
-          //     child: ListTile(
-          //       leading: const Icon(Icons.add_box_outlined),
-          //       onTap: () {
-          //         print("Hello");
-          //       },
-          //       title: const Opacity(
-          //         opacity: 0.6,
-          //         child: Text("Add a Task"),
-          //       ),
-          //     ),
-          //   ),
-          // ),
         ],
       ),
     );
@@ -157,7 +135,7 @@ class VetCard extends StatelessWidget {
     return Container(
       width: 300,
       decoration: BoxDecoration(
-          color: Color.fromARGB(217, 217, 217, 217),
+          color: const Color.fromARGB(217, 217, 217, 217),
           borderRadius: BorderRadius.circular(15)),
       child: const Column(
         crossAxisAlignment: CrossAxisAlignment.start,

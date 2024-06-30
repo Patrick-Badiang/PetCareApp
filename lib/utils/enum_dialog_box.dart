@@ -24,12 +24,12 @@ class EnumDialogBox extends StatelessWidget {
               //Get User input
               TextField(
                 controller: controller,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   border: OutlineInputBorder(),
                   hintText: "Add a new Appointment",
                 ),
               ),
-              Spacer(),
+              const Spacer(),
               //Add Button and a Cancel Buttons
               Row(
                 children: [

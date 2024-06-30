@@ -6,19 +6,17 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:pet_care_app/appointmentpage.dart';
 
 import 'package:pet_care_app/homepage.dart';
+import 'package:pet_care_app/models/caringModel.dart';
 import 'package:pet_care_app/topWidget.dart';
 import 'package:pet_care_app/utils/dialog_box.dart';
 
 void main() async {
-
   //init hive
   await Hive.initFlutter();
 
   //open a box
   var box = await Hive.openBox('mybox');
   var appointments = await Hive.openBox('appointments');
-
-
 
   runApp(const MyApp());
 }
@@ -49,17 +47,11 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-
   int currentPageIndex = 0;
-
-  
-
-
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        
         backgroundColor: Color(0xffE5E5E5),
         bottomNavigationBar: NavigationBar(
           onDestinationSelected: (int index) {
@@ -96,21 +88,73 @@ class _MyHomePageState extends State<MyHomePage> {
         body: [
           HomePage(),
           Appointments(),
+          CaringPage(),
           HomePage(),
-          HomePage(),
-
-          // const Column(
-          //   children: <Widget>[
-          //     TopWidget(subText: "These are", title: "My Appointments"),
-          //     Appointments()
-          //   ],
-          // ),
-          // const Column(
-          //   children: <Widget>[
-          //     TopWidget(subText: "", title: "Things to Know"),
-          //   ],
-          // ),
-          // const Text("Call Vet Page"),
         ][currentPageIndex]);
+  }
+}
+
+class CaringPage extends StatefulWidget {
+  const CaringPage({super.key});
+
+  @override
+  State<CaringPage> createState() => _CaringPageState();
+}
+
+class _CaringPageState extends State<CaringPage> {
+  List vet = ["Hello", "There"];
+
+  List likes = [
+    "Playing \"Seach\"",
+    "The kibble toppers as treats",
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        body: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        const TopWidget(subText: "", title: "Things to Know: "),
+        const SizedBox(
+          height: 20,
+        ),
+        const Padding(
+          padding: EdgeInsets.only(left: 15.0),
+          child: Text("For the vet I need: "),
+        ),
+        const SizedBox(height: 20),
+        Expanded(
+          child: ListView.separated(
+            padding: EdgeInsets.symmetric(horizontal: 20),
+            separatorBuilder: (context, index) => SizedBox(height: 10),
+            itemCount: vet.length,
+            itemBuilder: (context, index) {
+              return CaringModel(
+                name: "Hello",
+                bgcolor: Color(0xffCA7676),
+              );
+            },
+          ),
+        ),
+        const SizedBox(height: 20),
+        const Padding(
+          padding: EdgeInsets.only(left: 15.0),
+          child: Text("I like:"),
+        ),
+        Expanded(
+            child: ListView.separated(
+          padding: EdgeInsets.only(top: 20),
+          separatorBuilder: (context, index) => SizedBox(height: 10),
+          itemCount: likes.length,
+          itemBuilder: (context, index) {
+            return Container(
+              height: 30,
+              color: Color(0xffCAA376),
+            );
+          },
+        )),
+      ],
+    ));
   }
 }
