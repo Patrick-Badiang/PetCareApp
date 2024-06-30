@@ -3,13 +3,15 @@ import 'package:flutter/material.dart';
 class AppointmentModel extends StatelessWidget {
   final String path;
   final String name;
-  final Color  bgcolor;
+  final Color bgcolor;
+  Function(BuildContext?)? onDelete;
 
-  const AppointmentModel({
+  AppointmentModel({
     super.key,
     required this.name,
     required this.path,
     required this.bgcolor,
+    required this.onDelete,
   });
 
   @override
@@ -34,6 +36,13 @@ class AppointmentModel extends StatelessWidget {
           ),
           SizedBox(width: 10),
           Text(name),
+          Spacer(),
+          Container(
+            child: IconButton(
+              onPressed: () => onDelete?.call(context),
+              icon: Icon(Icons.delete),
+            ),
+          ),
         ],
       ),
     );

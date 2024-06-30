@@ -1,5 +1,5 @@
 
-
+import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 
 class ToDoDatabase {
@@ -27,5 +27,33 @@ class ToDoDatabase {
   //update database
   void updateDataBase(){
     _myBox.put("TASKS", tasks);
+  }
+}
+
+class AppointmentDatabase {
+
+  List appointments = [];
+
+  //reference  box
+  final _myBox = Hive.box('appointments');
+
+  //method  for initial  task  values
+  void createInitialData(){
+    appointments = [
+      ["assets/images/clock.png", "Click plus button", Color(0xff719BDA)],
+    ];
+  }
+
+  //load data from database
+  void loadData(){
+    var loadedApps = _myBox.get("APPOINTMENTS");
+  if (loadedApps != null) {
+    appointments = loadedApps;
+  }
+  }
+
+  //update database
+  void updateDataBase(){
+    _myBox.put("APPOINTMENTS", appointments);
   }
 }
