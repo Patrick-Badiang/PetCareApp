@@ -123,20 +123,19 @@ class _CaringPageState extends State<CaringPage> {
           padding: EdgeInsets.only(left: 15.0),
           child: Text("For the vet I need: "),
         ),
-        const SizedBox(height: 20),
+        const  SizedBox(height: 20),
         Expanded(
-          child: ListView.separated(
-            padding: EdgeInsets.symmetric(horizontal: 20),
-            separatorBuilder: (context, index) => SizedBox(height: 10),
-            itemCount: vet.length,
-            itemBuilder: (context, index) {
-              return CaringModel(
-                name: "Hello",
-                bgcolor: Color(0xffCA7676),
-              );
-            },
-          ),
-        ),
+            child: ListView.separated(
+          padding: EdgeInsets.symmetric(horizontal: 20),
+          separatorBuilder: (context, index) => SizedBox(height: 10),
+          itemCount: vet.length,
+          itemBuilder: (context, index) {
+            return CaringModel(
+              name: "Hello",
+              bgcolor: Color(0xffCA7676),
+            );
+          },
+        )),
         const SizedBox(height: 20),
         const Padding(
           padding: EdgeInsets.only(left: 15.0),
