@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:pet_care_app/appointmentpage.dart';
 
 import 'package:pet_care_app/homepage.dart';
 import 'package:pet_care_app/topWidget.dart';
@@ -109,47 +110,5 @@ class _MyHomePageState extends State<MyHomePage> {
           // ),
           // const Text("Call Vet Page"),
         ][currentPageIndex]);
-  }
-}
-
-class Appointments extends StatelessWidget {
-  const Appointments({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Padding(
-      padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 30.0),
-      child: Column(
-        children: <Widget>[
-          Card(
-            child: ListTile(
-              leading: FlutterLogo(
-                size: 56.0,
-              ),
-              title: Text(
-                  style: TextStyle(
-                    fontSize: 20,
-                  ),
-                  'Rabbies Shot TBD'),
-            ),
-          ),
-          Card(
-            child: ListTile(
-              leading: FlutterLogo(),
-              title: Text('Nail Clippings'),
-            ),
-          ),
-          Card(
-            child: ListTile(
-              leading: FlutterLogo(),
-              title: Opacity(
-                opacity: 0.6,
-                child: Text('Add an Appointment'),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
   }
 }

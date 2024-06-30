@@ -5,7 +5,7 @@ import 'package:flutter/widgets.dart';
 import 'package:hive/hive.dart';
 import 'package:pet_care_app/data/database.dart';
 
-import 'package:pet_care_app/taskModel.dart';
+import 'package:pet_care_app/models/taskModel.dart';
 import 'package:pet_care_app/topWidget.dart';
 import 'package:pet_care_app/utils/dialog_box.dart';
 
