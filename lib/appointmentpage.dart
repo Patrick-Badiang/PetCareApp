@@ -87,14 +87,12 @@ class _AppointmentsState extends State<Appointments> {
           SpeedDialChild(
               child: Image.asset("assets/images/needle.png"),
               label: "Vaccine Appointment",
-              backgroundColor: Color(0xffCA7676),
               onTap: () {
                 _addAppointment(type.vaccine);
               }),
           SpeedDialChild(
-              child: Image.asset("assets/images/dog.png"),
+              child: Image.asset("assets/images/dogoutline.png"),
               label: "Grooming Appointment",
-              backgroundColor: Color(0xffCAA376),
               onTap: () {
                 _addAppointment(type.grooming);
               }),

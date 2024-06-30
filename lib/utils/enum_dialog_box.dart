@@ -18,7 +18,7 @@ class EnumDialogBox extends StatelessWidget {
     return AlertDialog(
       backgroundColor: Colors.green,
       content: Container(
-          height: 200,
+          height: 150,
           child: Column(
             children: [
               //Get User input
@@ -29,8 +29,8 @@ class EnumDialogBox extends StatelessWidget {
                   hintText: "Add a new Appointment",
                 ),
               ),
-
-              //Add Button and a Cancel Button
+              Spacer(),
+              //Add Button and a Cancel Buttons
               Row(
                 children: [
                   MyButton(text: "Add", onPressed: onAdd),
