@@ -28,12 +28,6 @@ class _AppointmentsState extends State<Appointments> {
   //Text Controller
   final _controller = TextEditingController();
 
-  List appointments = [
-    ["assets/images/needle.png", "Rabies Shot TBD", Color(0xffCA7676)],
-    ["assets/images/dog.png", "Nail Clippings", Color(0xffCAA376)],
-    ["assets/images/needle.png", "Rabies Shot TBD", Color(0xffCA7676)],
-  ];
-
   @override
   void initState() {
     super.initState();
