@@ -8,7 +8,7 @@ import 'package:pet_care_app/topWidget.dart';
 import 'package:pet_care_app/utils/dialog_box.dart';
 
 
-enum type { vet, likes }
+enum Type { vet, likes }
 
 class CaringPage extends StatefulWidget {
   const CaringPage({super.key});
@@ -42,14 +42,14 @@ class _CaringPageState extends State<CaringPage> {
 
   }
 
-  void _addVet(type _add) {
+  void _addVet(Type add) {
     showDialog(
       context: context,
       builder: (context) {
         return DialogBox(
-          hint: "Enter ${_add == type.vet ? "Vet" : "Like"} Fact",
+          hint: "Enter ${add == Type.vet ? "Vet" : "Like"} Item",
           controller: _controller,
-          onAdd: () => saveNewAdd(_add),
+          onAdd: () => saveNewAdd(add),
           onCancel: () => Navigator.of(context).pop(),
         );
       },
@@ -57,9 +57,9 @@ class _CaringPageState extends State<CaringPage> {
 
   }
 
-  void saveNewAdd(type _add) {
+  void saveNewAdd(Type add) {
     setState(() {
-      if (_add == type.vet) {
+      if (add == Type.vet) {
         cares.vets.add(
             [ true,_controller.text]);
       } else {
@@ -73,9 +73,9 @@ class _CaringPageState extends State<CaringPage> {
 
   }
 
-  void onDelete(type _add, int index) {
+  void onDelete(Type add, int index) {
     setState(() {
-      if (_add == type.vet) {
+      if (add == Type.vet) {
         cares.vets.removeAt(index);
       } else {
         cares.likes.removeAt(index);
@@ -92,16 +92,16 @@ class _CaringPageState extends State<CaringPage> {
           animatedIcon: AnimatedIcons.add_event,
           children: [
             SpeedDialChild(
-                labelBackgroundColor: Color(0xffCAA376),
+                labelBackgroundColor: const Color(0xffCAA376),
                 label: "Likes",
                 onTap: () {
-                  _addVet(type.likes);
+                  _addVet(Type.likes);
                 }),
             SpeedDialChild(
-                labelBackgroundColor: Color(0xffCA7676),
+                labelBackgroundColor: const Color(0xffCA7676),
                 label: "Vet",
                 onTap: () {
-                  _addVet(type.vet);
+                  _addVet(Type.vet);
                 }),
           ],
         ),
@@ -120,14 +120,14 @@ class _CaringPageState extends State<CaringPage> {
             Expanded(
               child: ListView.separated(
                 shrinkWrap: true,
-                padding: EdgeInsets.symmetric(horizontal: 20),
-                separatorBuilder: (context, index) => SizedBox(height: 10),
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                separatorBuilder: (context, index) => const SizedBox(height: 10),
                 itemCount: cares.vets.length,
                 itemBuilder: (context, index) {
                   return CaringModel(
                     isVet: cares.vets[index][0],
                     name: cares.vets[index][1],
-                    onDelete: (context) => onDelete(type.vet,index),
+                    onDelete: (context) => onDelete(Type.vet,index),
                   );
                 },
               ),
@@ -142,14 +142,14 @@ class _CaringPageState extends State<CaringPage> {
             ),
             Expanded(
                 child: ListView.separated(
-              padding: EdgeInsets.symmetric(horizontal: 20),
-              separatorBuilder: (context, index) => SizedBox(height: 10),
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              separatorBuilder: (context, index) => const SizedBox(height: 10),
               itemCount: cares.likes.length,
               itemBuilder: (context, index) {
                 return CaringModel(
                   isVet: cares.likes[index][0],
                   name: cares.likes[index][1],
-                  onDelete: (context) => onDelete(type.likes,index),
+                  onDelete: (context) => onDelete(Type.likes,index),
 
                 );
               },

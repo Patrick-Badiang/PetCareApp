@@ -46,7 +46,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Color(0xffE5E5E5),
+        backgroundColor: const Color(0xffE5E5E5),
         bottomNavigationBar: NavigationBar(
           onDestinationSelected: (int index) {
             setState(() {
@@ -80,10 +80,10 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         ),
         body: [
-          HomePage(),
-          Appointments(),
-          CaringPage(),
-          HomePage(),
+          const HomePage(),
+          const Appointments(),
+          const CaringPage(),
+          const HomePage(),
         ][currentPageIndex]);
   }
 }

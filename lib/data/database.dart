@@ -37,7 +37,7 @@ class AppointmentDatabase {
   //method  for initial  task  values
   void createInitialData() {
     appointments = [
-      ["assets/images/clock.png", "Click plus button", Color(0xff719BDA)],
+      ["assets/images/clock.png", "Click plus button", const Color(0xff719BDA)],
     ];
   }
 

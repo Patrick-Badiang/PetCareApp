@@ -1,7 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/widgets.dart';
 
 class TopWidget extends StatelessWidget {
   final String subText;
@@ -10,7 +7,7 @@ class TopWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Color.fromARGB(255, 95, 196, 98),
+      color: const Color.fromARGB(255, 95, 196, 98),
       child: Column(
         children: [
           const PrintandCircle(),

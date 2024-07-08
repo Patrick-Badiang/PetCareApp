@@ -1,5 +1,7 @@
+// ignore: file_names
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class CaringModel extends StatelessWidget {
   final String name;
   final bool isVet;
@@ -18,7 +20,7 @@ class CaringModel extends StatelessWidget {
       height: 40.0,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
-        color: Color(0xffD9D9D9),
+        color: const Color(0xffD9D9D9),
       ),
       child: Row(
         children: [
@@ -28,18 +30,17 @@ class CaringModel extends StatelessWidget {
             width: 45,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(20),
-              color: isVet ? Color(0xffCA7676) : Color(0xffCAA376),
+              color: isVet ? const Color(0xffCA7676) : const Color(0xffCAA376),
             ),
           ),
-          SizedBox(width: 10),
+          const SizedBox(width: 10),
           Text(name),
-          Spacer(),
-          Container(
-            child: IconButton(
+          const Spacer(),
+          IconButton(
               onPressed: () => onDelete?.call(context),
-              icon: Icon(Icons.delete),
+              icon: const Icon(Icons.delete),
             ),
-          ),
+          
         ],
       ),
     );

@@ -1,18 +1,16 @@
-import 'package:flutter/cupertino.dart';
+// ignore: file_names
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/widgets.dart';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
+// ignore: must_be_immutable
 class TaskTile extends StatelessWidget {
   final String taskName;
   final bool isDone;
   Function(bool?)? onChanged;
   Function(BuildContext?)? onDelete;
 
-  TaskTile({
+  TaskTile({super.key, 
     required this.taskName,
     required this.isDone,
     required this.onChanged,
@@ -21,7 +19,7 @@ class TaskTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
         height: 50,
         child: Row(
           children: [
@@ -38,7 +36,7 @@ class TaskTile extends StatelessWidget {
             //Task Name
             Slidable(
               endActionPane: ActionPane(
-                motion: StretchMotion(),
+                motion: const StretchMotion(),
                 children: [
                   SlidableAction(
                     onPressed: onDelete,
@@ -55,7 +53,7 @@ class TaskTile extends StatelessWidget {
                 padding: const EdgeInsets.only(left: 10.0),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(40),
-                  color: Color(0XFFD9D9D9),
+                  color: const Color(0XFFD9D9D9),
                 ),
                 child: Row(
                   children: [
@@ -68,12 +66,12 @@ class TaskTile extends StatelessWidget {
                       ),
                       taskName,
                     ),
-                    Spacer(),
+                    const Spacer(),
                     Container(
                         child: isDone
                             ? IconButton(
                                 onPressed: () => onDelete?.call(context),
-                                icon: Icon(Icons.delete))
+                                icon: const  Icon(Icons.delete))
                             : null),
                   ],
                 ),

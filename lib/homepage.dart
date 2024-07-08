@@ -31,7 +31,6 @@ class _HomePageState extends State<HomePage> {
   void initApp() async {
     // If this is the first time opening the app then create default values
     if (_myBox.get("TASKS") == null) {
-      print("Initial Data");
       db.createInitialData();
     } else {
       // There already exists data

@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -8,13 +7,13 @@ import 'package:pet_care_app/topWidget.dart';
 import 'package:pet_care_app/utils/dialog_box.dart';
 
 
-enum type {
+enum Type {
   vaccine,
   grooming,
 }
 
 class Appointments extends StatefulWidget {
-  Appointments({super.key});
+  const Appointments({super.key});
 
   @override
   State<Appointments> createState() => _AppointmentsState();
@@ -44,7 +43,7 @@ class _AppointmentsState extends State<Appointments> {
 
   }
 
-  void _addAppointment(type appointment) {
+  void _addAppointment(Type appointment) {
     showDialog(
       context: context,
       builder: (context) {
@@ -59,9 +58,9 @@ class _AppointmentsState extends State<Appointments> {
 
   }
 
-  void saveNewAppointment(type _appointment) {
+  void saveNewAppointment(Type appointment) {
     setState(() {
-      if (_appointment == type.vaccine) {
+      if (appointment == Type.vaccine) {
         apps.appointments.add(
             ["assets/images/needle.png", _controller.text, true]);
       } else {
@@ -93,13 +92,13 @@ class _AppointmentsState extends State<Appointments> {
               child: Image.asset("assets/images/needle.png"),
               label: "Vaccine Appointment",
               onTap: () {
-                _addAppointment(type.vaccine);
+                _addAppointment(Type.vaccine);
               }),
           SpeedDialChild(
               child: Image.asset("assets/images/dogoutline.png"),
               label: "Grooming Appointment",
               onTap: () {
-                _addAppointment(type.grooming);
+                _addAppointment(Type.grooming);
               }),
         ],
       ),
@@ -111,10 +110,10 @@ class _AppointmentsState extends State<Appointments> {
           ),
           Expanded(
             child: ListView.separated(
-              padding: EdgeInsets.symmetric(horizontal: 30.0),
+              padding: const EdgeInsets.symmetric(horizontal: 30.0),
               shrinkWrap: true,
               scrollDirection: Axis.vertical,
-              separatorBuilder: (context, index) => SizedBox(height: 10),
+              separatorBuilder: (context, index) => const SizedBox(height: 10),
               itemCount: apps.appointments.length,
               itemBuilder: (context, index) {
                 return AppointmentModel(
