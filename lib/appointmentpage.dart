@@ -5,6 +5,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:pet_care_app/data/database.dart';
 import 'package:pet_care_app/models/appointmentModel.dart';
 import 'package:pet_care_app/topWidget.dart';
+import 'package:pet_care_app/utils/dialog_box.dart';
 
 import 'package:pet_care_app/utils/enum_dialog_box.dart';
 
@@ -22,7 +23,7 @@ class Appointments extends StatefulWidget {
 
 class _AppointmentsState extends State<Appointments> {
   //reference hive box
-  final _appBox = Hive.box('appointments');
+  final _appBox = Hive.box('mybox');
   AppointmentDatabase apps = AppointmentDatabase();
 
   //Text Controller
@@ -35,8 +36,7 @@ class _AppointmentsState extends State<Appointments> {
   }
 
   void initData() async {
-        //if  it's first time, and  no  init data
-
+     //if  it's first time, and  no  init data
     if (_appBox.get("APPOINTMENTS") == null) {
       apps.createInitialData();
     } else {
@@ -49,33 +49,38 @@ class _AppointmentsState extends State<Appointments> {
     showDialog(
       context: context,
       builder: (context) {
-        return EnumDialogBox(
+        return DialogBox(
           controller: _controller,
           onAdd: () => saveNewAppointment(appointment),
           onCancel: () => Navigator.of(context).pop(),
         );
       },
     );
+
   }
 
   void saveNewAppointment(type _appointment) {
     setState(() {
       if (_appointment == type.vaccine) {
         apps.appointments.add(
-            ["assets/images/needle.png", _controller.text, Color(0xffCA7676)]);
+            ["assets/images/needle.png", _controller.text, true]);
       } else {
         apps.appointments.add(
-            ["assets/images/dog.png", _controller.text, Color(0xffCAA376)]);
+            ["assets/images/dog.png", _controller.text, false]);
       }
     });
 
     Navigator.of(context).pop();
+    apps.updateDataBase();
+
   }
 
   void deleteTask(int index){
     setState(() {
       apps.appointments.removeAt(index);
     });
+    apps.updateDataBase();
+
   }
 
   @override
@@ -115,7 +120,7 @@ class _AppointmentsState extends State<Appointments> {
                 return AppointmentModel(
                   path: apps.appointments[index][0],
                   name: apps.appointments[index][1],
-                  bgcolor: apps.appointments[index][2],
+                  isVet: apps.appointments[index][2],
                   onDelete: (context) => deleteTask(index),
                 );
               },

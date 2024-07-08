@@ -1,14 +1,9 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/widgets.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:pet_care_app/appointmentpage.dart';
 
 import 'package:pet_care_app/homepage.dart';
-import 'package:pet_care_app/models/caringModel.dart';
-import 'package:pet_care_app/topWidget.dart';
-import 'package:pet_care_app/utils/dialog_box.dart';
+import 'package:pet_care_app/caringpage.dart';
 
 void main() async {
   //init hive
@@ -16,7 +11,6 @@ void main() async {
 
   //open a box
   var box = await Hive.openBox('mybox');
-  var appointments = await Hive.openBox('appointments');
 
   runApp(const MyApp());
 }
@@ -94,66 +88,3 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 }
 
-class CaringPage extends StatefulWidget {
-  const CaringPage({super.key});
-
-  @override
-  State<CaringPage> createState() => _CaringPageState();
-}
-
-class _CaringPageState extends State<CaringPage> {
-  List vet = ["Hello", "There"];
-
-  List likes = [
-    "Playing \"Seach\"",
-    "The kibble toppers as treats",
-  ];
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-        body: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        const TopWidget(subText: "", title: "Things to Know: "),
-        const SizedBox(
-          height: 20,
-        ),
-        const Padding(
-          padding: EdgeInsets.only(left: 15.0),
-          child: Text("For the vet I need: "),
-        ),
-        const  SizedBox(height: 20),
-        Expanded(
-            child: ListView.separated(
-          padding: EdgeInsets.symmetric(horizontal: 20),
-          separatorBuilder: (context, index) => SizedBox(height: 10),
-          itemCount: vet.length,
-          itemBuilder: (context, index) {
-            return CaringModel(
-              name: "Hello",
-              bgcolor: Color(0xffCA7676),
-            );
-          },
-        )),
-        const SizedBox(height: 20),
-        const Padding(
-          padding: EdgeInsets.only(left: 15.0),
-          child: Text("I like:"),
-        ),
-        Expanded(
-            child: ListView.separated(
-          padding: EdgeInsets.only(top: 20),
-          separatorBuilder: (context, index) => SizedBox(height: 10),
-          itemCount: likes.length,
-          itemBuilder: (context, index) {
-            return Container(
-              height: 30,
-              color: Color(0xffCAA376),
-            );
-          },
-        )),
-      ],
-    ));
-  }
-}

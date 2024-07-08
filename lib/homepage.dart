@@ -14,34 +14,30 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  
   //reference  hive box
   final _myBox = Hive.box('mybox');
   ToDoDatabase db = ToDoDatabase();
-  
-
 
   //Text Controller
   final _controller = TextEditingController();
 
   @override
-  void initState(){
+  void initState() {
     super.initState();
 
     initApp();
-
-
   }
 
   void initApp() async {
-  // If this is the first time opening the app then create default values
-  if (_myBox.get("TASKS") == null) {
-    db.createInitialData();
-  } else {
-    // There already exists data
-    db.loadData();
+    // If this is the first time opening the app then create default values
+    if (_myBox.get("TASKS") == null) {
+      print("Initial Data");
+      db.createInitialData();
+    } else {
+      // There already exists data
+      db.loadData();
+    }
   }
-}
 
   void _taskClicked(bool? value, int index) {
     setState(() {
@@ -68,14 +64,15 @@ class _HomePageState extends State<HomePage> {
     setState(() {
       db.tasks.add([_controller.text, false]);
     });
-     Navigator.of(context).pop();
+    Navigator.of(context).pop();
+    db.updateDataBase();
   }
 
-  void deleteTask( int index){
-    setState((){
-    db.tasks.removeAt(index);
-
+  void deleteTask(int index) {
+    setState(() {
+      db.tasks.removeAt(index);
     });
+    db.updateDataBase();
   }
 
   @override
@@ -104,21 +101,24 @@ class _HomePageState extends State<HomePage> {
           const SizedBox(height: 15),
           Expanded(
             // Wrap the Container in an Expanded widget
-            child: ListView.separated(
-              padding: EdgeInsets.zero,
-              shrinkWrap: true,
-              scrollDirection: Axis.vertical,
-              itemCount: db.tasks.length,
-              separatorBuilder: (context, index) => const SizedBox(height: 10),
-              itemBuilder: (context, index) {
-                return TaskTile(
-                  
-                  taskName: db.tasks[index][0],
-                  isDone: db.tasks[index][1],
-                  onChanged: (value) => _taskClicked(value, index),
-                  onDelete: (context) => deleteTask(index),
-                );
-              },
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 40.0),
+              child: ListView.separated(
+                padding: EdgeInsets.zero,
+                shrinkWrap: true,
+                scrollDirection: Axis.vertical,
+                itemCount: db.tasks.length,
+                separatorBuilder: (context, index) =>
+                    const SizedBox(height: 10),
+                itemBuilder: (context, index) {
+                  return TaskTile(
+                    taskName: db.tasks[index][0],
+                    isDone: db.tasks[index][1],
+                    onChanged: (value) => _taskClicked(value, index),
+                    onDelete: (context) => deleteTask(index),
+                  );
+                },
+              ),
             ),
           ),
         ],

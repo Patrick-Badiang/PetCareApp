@@ -21,9 +21,7 @@ class TaskTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 40.0),
-      child: Container(
+    return Container(
         height: 50,
         child: Row(
           children: [
@@ -83,7 +81,7 @@ class TaskTile extends StatelessWidget {
             ),
           ],
         ),
-      ),
+      
     );
   }
 }

@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 
 class CaringModel extends StatelessWidget {
   final String name;
-  final Color bgcolor;
-  // Function(BuildContext?)? onDelete;
+  final bool isVet;
+  Function(BuildContext?)? onDelete;
 
   CaringModel({
     super.key,
     required this.name,
-    required this.bgcolor,
-    // required this.onDelete,
+    required this.isVet,
+    required this.onDelete,
   });
 
   @override
@@ -28,18 +28,18 @@ class CaringModel extends StatelessWidget {
             width: 45,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(20),
-              color: bgcolor,
+              color: isVet ? Color(0xffCA7676) : Color(0xffCAA376),
             ),
           ),
           SizedBox(width: 10),
           Text(name),
-          // Spacer(),
-          // Container(
-          //   child: IconButton(
-          //     // onPressed: () => onDelete?.call(context),
-          //     icon: Icon(Icons.delete),
-          //   ),
-          // ),
+          Spacer(),
+          Container(
+            child: IconButton(
+              onPressed: () => onDelete?.call(context),
+              icon: Icon(Icons.delete),
+            ),
+          ),
         ],
       ),
     );

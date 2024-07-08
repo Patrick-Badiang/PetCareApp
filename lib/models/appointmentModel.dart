@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 class AppointmentModel extends StatelessWidget {
   final String path;
   final String name;
-  final Color bgcolor;
+  final bool isVet;
   Function(BuildContext?)? onDelete;
 
   AppointmentModel({
     super.key,
     required this.name,
     required this.path,
-    required this.bgcolor,
+    required this.isVet,
     required this.onDelete,
   });
 
@@ -30,7 +30,7 @@ class AppointmentModel extends StatelessWidget {
             width: 100,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(20),
-              color: bgcolor,
+              color: isVet ? Color(0xffCAA376) : Color(0xffCA7676),
             ),
             child: Image.asset(path),
           ),
