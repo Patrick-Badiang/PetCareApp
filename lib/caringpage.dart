@@ -5,7 +5,7 @@ import 'package:pet_care_app/data/database.dart';
 
 import 'package:pet_care_app/models/caringModel.dart';
 import 'package:pet_care_app/topWidget.dart';
-import 'package:pet_care_app/utils/enum_dialog_box.dart';
+import 'package:pet_care_app/utils/dialog_box.dart';
 
 
 enum type { vet, likes }
@@ -21,16 +21,6 @@ class _CaringPageState extends State<CaringPage> {
 
   //reference  box
   final _myBox = Hive.box('mybox');
-  List vet = [
-    "Hello",
-    "There",
-  ];
-
-  List likes = [
-    "Playing \"Seach\"",
-    "The kibble toppers as treats",
-  ];
-
   CaringDatabase cares = CaringDatabase();
 
   //Text Controller
@@ -56,7 +46,7 @@ class _CaringPageState extends State<CaringPage> {
     showDialog(
       context: context,
       builder: (context) {
-        return EnumDialogBox(
+        return DialogBox(
           controller: _controller,
           onAdd: () => saveNewAdd(_add),
           onCancel: () => Navigator.of(context).pop(),
