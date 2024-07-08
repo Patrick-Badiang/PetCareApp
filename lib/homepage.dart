@@ -52,6 +52,7 @@ class _HomePageState extends State<HomePage> {
       context: context,
       builder: (context) {
         return DialogBox(
+          hint: "Enter Task Name",
           controller: _controller,
           onAdd: saveNewTask,
           onCancel: () => Navigator.of(context).pop(),

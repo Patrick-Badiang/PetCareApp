@@ -47,6 +47,7 @@ class _CaringPageState extends State<CaringPage> {
       context: context,
       builder: (context) {
         return DialogBox(
+          hint: "Enter ${_add == type.vet ? "Vet" : "Like"} Fact",
           controller: _controller,
           onAdd: () => saveNewAdd(_add),
           onCancel: () => Navigator.of(context).pop(),

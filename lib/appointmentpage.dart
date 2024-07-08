@@ -7,7 +7,6 @@ import 'package:pet_care_app/models/appointmentModel.dart';
 import 'package:pet_care_app/topWidget.dart';
 import 'package:pet_care_app/utils/dialog_box.dart';
 
-import 'package:pet_care_app/utils/enum_dialog_box.dart';
 
 enum type {
   vaccine,
@@ -50,6 +49,7 @@ class _AppointmentsState extends State<Appointments> {
       context: context,
       builder: (context) {
         return DialogBox(
+          hint: "Enter Appointment Name",
           controller: _controller,
           onAdd: () => saveNewAppointment(appointment),
           onCancel: () => Navigator.of(context).pop(),

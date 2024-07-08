@@ -3,6 +3,7 @@ import 'package:pet_care_app/utils/my_button.dart';
 
 class DialogBox extends StatelessWidget {
   final controller;
+  final String hint;
   VoidCallback onAdd;
   VoidCallback onCancel;
 
@@ -10,6 +11,7 @@ class DialogBox extends StatelessWidget {
   DialogBox({
     super.key,
     required this.controller,
+    required this.hint,
     required  this.onAdd,
     required this.onCancel,
   });
@@ -27,7 +29,7 @@ class DialogBox extends StatelessWidget {
                 controller: controller,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
-                  hintText: "Add a new task",
+                  hintText: hint,
                 ),
               ),
 
