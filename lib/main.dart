@@ -4,12 +4,14 @@ import 'package:pet_care_app/appointmentpage.dart';
 
 import 'package:pet_care_app/homepage.dart';
 import 'package:pet_care_app/caringpage.dart';
+import 'package:pet_care_app/topWidget.dart';
 
 void main() async {
   //init hive
   await Hive.initFlutter();
 
   //open a box
+  // ignore: unused_local_variable
   var box = await Hive.openBox('mybox');
 
   runApp(const MyApp());
@@ -25,10 +27,55 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.green),
+        colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xff73BA9B)),
         useMaterial3: true,
       ),
-      home: const MyHomePage(),
+      home: const MyWidget(),
+    );
+  }
+}
+
+class MyWidget extends StatefulWidget {
+  const MyWidget({super.key});
+
+  @override
+  State<MyWidget> createState() => _MyWidgetState();
+}
+
+class _MyWidgetState extends State<MyWidget> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: SafeArea(
+        child: Center(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              const SizedBox(height: 50),
+              const Text(
+                "Welcome Back",
+                style: TextStyle(fontSize: 30, color: Colors.black),
+              ),
+              const SizedBox(height: 25),
+              Image.asset("assets/images/Login/LoginPhoto.png"),
+              const SizedBox(height: 25),
+              const Padding(
+                padding:  EdgeInsets.symmetric(horizontal: 25.0),
+                child: TextField(
+                  decoration: InputDecoration(
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.white),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.grey),
+                    )
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }
@@ -87,4 +134,3 @@ class _MyHomePageState extends State<MyHomePage> {
         ][currentPageIndex]);
   }
 }
-

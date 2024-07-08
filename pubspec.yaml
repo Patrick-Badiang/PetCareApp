@@ -70,6 +70,7 @@ flutter:
     - assets/images/dog.png
     - assets/images/dogoutline.png
     - assets/images/clock.png
+    - assets/images/Login/LoginPhoto.png
 
 
   # To add assets to your application, add an assets section, like this:

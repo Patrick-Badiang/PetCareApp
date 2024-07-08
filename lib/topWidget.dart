@@ -7,10 +7,10 @@ class TopWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: const Color.fromARGB(255, 95, 196, 98),
+      color: const Color(0xff73BA9B),
       child: Column(
         children: [
-          const PrintandCircle(),
+          PrintandCircle(pawcolor: Color(0xff4F759B),),
           Text(
             style: const TextStyle(
               fontSize: 30,
@@ -32,21 +32,22 @@ class TopWidget extends StatelessWidget {
 }
 
 class PrintandCircle extends StatelessWidget {
-  const PrintandCircle({super.key});
+  final Color pawcolor;
+  const PrintandCircle({super.key, required this.pawcolor});
 
   @override
   Widget build(BuildContext context) {
-    return const Row(
+    return  Row(
       children: [
         Flexible(
           flex: 1,
           child: SizedBox(
             height: 250,
             width: 200,
-            child: PawPrint(),
+            child: PawPrint(pawColor: pawcolor,),
           ),
         ),
-        Flexible(
+        const Flexible(
           flex: 1,
           child: Padding(
             padding: EdgeInsets.only(left: 8.0, top: 50.0),
@@ -63,7 +64,11 @@ class PrintandCircle extends StatelessWidget {
 }
 
 class PawPrint extends StatelessWidget {
-  const PawPrint({super.key});
+  final Color pawColor;
+  PawPrint({
+    super.key,
+    required this.pawColor,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -72,9 +77,9 @@ class PawPrint extends StatelessWidget {
         Container(
           width: 150,
           height: 150,
-          decoration: const BoxDecoration(
-            color: Colors.brown,
-            borderRadius: BorderRadius.only(
+          decoration: BoxDecoration(
+            color: pawColor,
+            borderRadius: const BorderRadius.only(
               bottomRight: Radius.circular(500),
             ),
           ),
@@ -85,8 +90,8 @@ class PawPrint extends StatelessWidget {
           child: Container(
             width: 50,
             height: 50,
-            decoration: const BoxDecoration(
-                color: Colors.brown, shape: BoxShape.circle),
+            decoration: BoxDecoration(
+                color: pawColor, shape: BoxShape.circle),
           ),
         ),
         Positioned(
@@ -95,8 +100,8 @@ class PawPrint extends StatelessWidget {
           child: Container(
             width: 50,
             height: 50,
-            decoration: const BoxDecoration(
-                color: Colors.brown, shape: BoxShape.circle),
+            decoration:  BoxDecoration(
+                color: pawColor, shape: BoxShape.circle),
           ),
         ),
         Positioned(
@@ -105,8 +110,8 @@ class PawPrint extends StatelessWidget {
           child: Container(
             width: 50,
             height: 50,
-            decoration: const BoxDecoration(
-                color: Colors.brown, shape: BoxShape.circle),
+            decoration: BoxDecoration(
+                color: pawColor, shape: BoxShape.circle),
           ),
         ),
       ],

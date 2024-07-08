@@ -80,7 +80,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       floatingActionButton: FloatingActionButton.small(
         shape: const CircleBorder(),
-        backgroundColor: Colors.green,
+        backgroundColor: const Color(0xff73BA9B),
         onPressed: () {
           _addTask();
         },
