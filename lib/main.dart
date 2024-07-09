@@ -5,6 +5,8 @@ import 'package:pet_care_app/appointmentpage.dart';
 import 'package:pet_care_app/homepage.dart';
 import 'package:pet_care_app/caringpage.dart';
 import 'package:pet_care_app/topWidget.dart';
+import 'package:pet_care_app/utils/my_sign_in_button.dart';
+import 'package:pet_care_app/utils/styled_text_field.dart';
 
 void main() async {
   //init hive
@@ -43,35 +45,84 @@ class MyWidget extends StatefulWidget {
 }
 
 class _MyWidgetState extends State<MyWidget> {
+  final controller = TextEditingController();
+
+  void signUserIn(){
+    print("Sign In Tapped");
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xffE5E5E5),
       body: SafeArea(
         child: Center(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
+              //Login  Icon
+              const SizedBox(height: 25),
+              Image.asset("assets/images/Login/LoginPhoto.png"),
+
+              //Welcome back text
               const SizedBox(height: 50),
               const Text(
                 "Welcome Back",
                 style: TextStyle(fontSize: 30, color: Colors.black),
               ),
+
+              //Email and Password TextFields
               const SizedBox(height: 25),
-              Image.asset("assets/images/Login/LoginPhoto.png"),
-              const SizedBox(height: 25),
-              const Padding(
-                padding:  EdgeInsets.symmetric(horizontal: 25.0),
-                child: TextField(
-                  decoration: InputDecoration(
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.white),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.grey),
-                    )
-                  ),
-                ),
+              StyledTextField(
+                controller: controller,
+                hintText: 'Enter your Email',
+                obscureText: false,
               ),
+              const SizedBox(
+                height: 15,
+              ),
+              StyledTextField(
+                controller: controller,
+                hintText: 'Enter your Password',
+                obscureText: true,
+              ),
+
+              //Forgot password?
+              const Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(right: 25.0),
+                    child: Text("Forgot Password?"),
+                  )
+                ],
+              ),
+
+              //Sign in  Button
+              const SizedBox(height: 25,),
+              MySignInButton(
+                onTap: signUserIn,
+              ),
+          
+
+              //Continue with
+              const  SizedBox(height: 25,),
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 25.0),
+                child: Row(
+                  children: [
+                    Expanded(child: Divider( thickness: 5,)),
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 5.0),
+                      child: Text("Or Continue With"),
+                    ),
+                    Expanded(child: Divider( thickness: 5,)),
+                  ],
+                ),
+              )
+
+              //Google and Facebook Icons
+              
             ],
           ),
         ),
