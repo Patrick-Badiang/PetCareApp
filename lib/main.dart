@@ -48,7 +48,6 @@ class MyApp extends StatelessWidget {
   }
 }
 
-
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
 
@@ -57,7 +56,12 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  final user = FirebaseAuth.instance.currentUser!;
   int currentPageIndex = 0;
+
+  void signUserOut() async {
+    await FirebaseAuth.instance.signOut();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -65,9 +69,15 @@ class _MyHomePageState extends State<MyHomePage> {
         backgroundColor: const Color(0xffE5E5E5),
         bottomNavigationBar: NavigationBar(
           onDestinationSelected: (int index) {
-            setState(() {
-              currentPageIndex = index;
-            });
+            // Check if the last index (sign out button) is selected
+            if (index == 3) {
+              // Assuming the new button is the fifth item
+              signUserOut(); // Call the SignUserOut method
+            } else {
+              setState(() {
+                currentPageIndex = index;
+              });
+            }
           },
           indicatorColor: Colors.amber,
           selectedIndex: currentPageIndex,
@@ -89,11 +99,8 @@ class _MyHomePageState extends State<MyHomePage> {
               label: 'Caring for pet',
             ),
             NavigationDestination(
-              icon: Badge(
-                label: Text('2'),
-                child: Icon(Icons.phone_callback),
-              ),
-              label: 'Call Vet',
+              icon: Icon(Icons.logout),
+              label: 'Logout',
             ),
           ],
         ),
@@ -103,7 +110,6 @@ class _MyHomePageState extends State<MyHomePage> {
           const HomePage(),
           const Appointments(),
           const CaringPage(),
-          const HomePage(),
         ][currentPageIndex]);
   }
 }

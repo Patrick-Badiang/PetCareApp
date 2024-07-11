@@ -20,15 +20,30 @@ class _LoginPageState extends State<LoginPage> {
   final passwordController = TextEditingController();
 
   void signUserIn() async {
+    try {
     await FirebaseAuth.instance.signInWithEmailAndPassword(
-      email: emailController.text,
+      email: emailController.text.trim(), // Trim to remove any leading/trailing whitespace
       password: passwordController.text,
     );
+  } on FirebaseAuthException catch (e) {
+    if (e.code == 'invalid-credential') {
+      // Handle the invalid credential error
+      print('The supplied auth credential is malformed or has expired.');
+      // Optionally, show an error message to the user
+    } else {
+      // Handle other FirebaseAuthExceptions
+      print('An error occurred: ${e.message}');
+    }
+  } catch (e) {
+    // Handle any other exceptions
+    print('An unexpected error occurred: $e');
+  }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      
       backgroundColor: const Color(0xffE5E5E5),
       body: SafeArea(
         child: Center(
