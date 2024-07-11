@@ -49,6 +49,9 @@ class _LoginPageState extends State<LoginPage> {
       // Handle any other exceptions
       print('An unexpected error occurred: $e');
     }
+
+    //Pop out the loading circle
+    Navigator.pop(context);
   }
 
   @override
