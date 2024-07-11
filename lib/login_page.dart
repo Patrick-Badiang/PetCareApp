@@ -35,11 +35,17 @@ class _LoginPageState extends State<LoginPage> {
         email: emailController.text
             .trim(), // Trim to remove any leading/trailing whitespace
         password: passwordController.text,
+
+        
       );
+      //Pop out the loading circle
+    Navigator.pop(context);
     } on FirebaseAuthException catch (e) {
+      //Pop out the loading circle
+    Navigator.pop(context);
       if (e.code == 'invalid-credential') {
         // Handle the invalid credential error
-        print('The supplied auth credential is malformed or has expired.');
+        showError('Invalid credentials');
         // Optionally, show an error message to the user
       } else {
         // Handle other FirebaseAuthExceptions
@@ -50,8 +56,27 @@ class _LoginPageState extends State<LoginPage> {
       print('An unexpected error occurred: $e');
     }
 
-    //Pop out the loading circle
-    Navigator.pop(context);
+    
+  }
+
+  void showError(String message){
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text("Error"),
+          content: Text(message),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: const Text("OK"),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override
