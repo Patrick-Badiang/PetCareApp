@@ -8,42 +8,52 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 
-
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
 
   @override
   State<LoginPage> createState() => _LoginPageState();
 }
+
 class _LoginPageState extends State<LoginPage> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
   void signUserIn() async {
-    try {
-    await FirebaseAuth.instance.signInWithEmailAndPassword(
-      email: emailController.text.trim(), // Trim to remove any leading/trailing whitespace
-      password: passwordController.text,
+    //Show a loading circle
+    showDialog(
+      context: context,
+      builder: (context) {
+        return const Center(
+          child: CircularProgressIndicator(),
+        );
+      },
     );
-  } on FirebaseAuthException catch (e) {
-    if (e.code == 'invalid-credential') {
-      // Handle the invalid credential error
-      print('The supplied auth credential is malformed or has expired.');
-      // Optionally, show an error message to the user
-    } else {
-      // Handle other FirebaseAuthExceptions
-      print('An error occurred: ${e.message}');
+
+    try {
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: emailController.text
+            .trim(), // Trim to remove any leading/trailing whitespace
+        password: passwordController.text,
+      );
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'invalid-credential') {
+        // Handle the invalid credential error
+        print('The supplied auth credential is malformed or has expired.');
+        // Optionally, show an error message to the user
+      } else {
+        // Handle other FirebaseAuthExceptions
+        print('An error occurred: ${e.message}');
+      }
+    } catch (e) {
+      // Handle any other exceptions
+      print('An unexpected error occurred: $e');
     }
-  } catch (e) {
-    // Handle any other exceptions
-    print('An unexpected error occurred: $e');
-  }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      
       backgroundColor: const Color(0xffE5E5E5),
       body: SafeArea(
         child: Center(

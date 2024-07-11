@@ -71,7 +71,7 @@ class _MyHomePageState extends State<MyHomePage> {
           onDestinationSelected: (int index) {
             // Check if the last index (sign out button) is selected
             if (index == 3) {
-              // Assuming the new button is the fifth item
+              // Assuming the new button is the fourth item
               signUserOut(); // Call the SignUserOut method
             } else {
               setState(() {
