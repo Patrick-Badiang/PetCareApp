@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:pet_care_app/main.dart';
 import 'package:pet_care_app/utils/my_sign_in_button.dart';
 import 'package:pet_care_app/utils/my_square_tile.dart';
@@ -9,7 +10,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+  final Function()? onTap;
+  const LoginPage({super.key, required this.onTap});
 
   @override
   State<LoginPage> createState() => _LoginPageState();
@@ -120,7 +122,7 @@ class _LoginPageState extends State<LoginPage> {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.only(right: 25.0),
+                    padding: EdgeInsets.only(right: 25.0),
                     child: Text("Forgot Password?"),
                   )
                 ],
@@ -131,6 +133,7 @@ class _LoginPageState extends State<LoginPage> {
                 height: 25,
               ),
               MySignInButton(
+                text: "Sign In",
                 onTap: signUserIn,
               ),
 
@@ -182,18 +185,21 @@ class _LoginPageState extends State<LoginPage> {
               const SizedBox(
                 height: 25,
               ),
-              const Row(
+              Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text("Not a member?"),
+                  const Text("Not a member?"),
                   const SizedBox(
                     width: 5,
                   ),
-                  Text(
-                    "Register now",
-                    style: TextStyle(
-                      color: Colors.blue,
-                      fontWeight: FontWeight.bold,
+                  GestureDetector(
+                    onTap: widget.onTap,
+                    child: const Text(
+                      "Register now",
+                      style: TextStyle(
+                        color: Colors.blue,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                 ],

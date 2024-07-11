@@ -72,6 +72,7 @@ flutter:
     - assets/images/dog.png
     - assets/images/dogoutline.png
     - assets/images/clock.png
+    - assets/images/RegisterPhoto.png
     - assets/images/Login/LoginPhoto.png
     - assets/images/Login/GoogleIcon.png
     - assets/images/Login/AppleIcon.png
