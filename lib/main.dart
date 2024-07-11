@@ -4,6 +4,7 @@ import 'package:pet_care_app/appointmentpage.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:pet_care_app/auth_page.dart';
 import 'firebase_options.dart';
 
 import 'package:pet_care_app/homepage.dart';
@@ -42,7 +43,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xff73BA9B)),
         useMaterial3: true,
       ),
-      home: const LoginPage(),
+      home: const AuthPage(),
     );
   }
 }
