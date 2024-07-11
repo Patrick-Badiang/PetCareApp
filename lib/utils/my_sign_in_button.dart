@@ -6,7 +6,7 @@ class MySignInButton extends StatelessWidget {
 
   const MySignInButton({
     super.key,
-    required  this.onTap,
+    required this.onTap,
   });
 
   @override
