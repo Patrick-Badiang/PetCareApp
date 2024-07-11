@@ -49,11 +49,11 @@ class _LoginPageState extends State<LoginPage> {
         // Optionally, show an error message to the user
       } else {
         // Handle other FirebaseAuthExceptions
-        print('An error occurred: ${e.message}');
+        showError('An error occurred: ${e.message}');
       }
     } catch (e) {
       // Handle any other exceptions
-      print('An unexpected error occurred: $e');
+      showError('An unexpected error occurred: $e');
     }
 
     
