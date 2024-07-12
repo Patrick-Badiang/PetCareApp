@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:pet_care_app/login_page.dart';
 import 'package:pet_care_app/register_page.dart';
+import 'package:pet_care_app/services/auth_service.dart';
 
 class LoginOrRegisterPage extends StatefulWidget {
-
   const LoginOrRegisterPage({super.key});
 
   @override
@@ -11,7 +11,6 @@ class LoginOrRegisterPage extends StatefulWidget {
 }
 
 class _LoginOrRegisterPageState extends State<LoginOrRegisterPage> {
-
   //initally show loginPage
   bool showLoginPage = true;
 

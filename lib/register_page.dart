@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:pet_care_app/main.dart';
+import 'package:pet_care_app/services/auth_service.dart';
 import 'package:pet_care_app/utils/my_sign_in_button.dart';
 import 'package:pet_care_app/utils/my_square_tile.dart';
 import 'package:pet_care_app/utils/styled_text_field.dart';
@@ -11,6 +12,7 @@ import 'firebase_options.dart';
 
 class RegisterPage extends StatefulWidget {
   final Function()? onTap;
+
   const RegisterPage({super.key, required this.onTap});
 
   @override
@@ -177,13 +179,15 @@ class _RegisterPageState extends State<RegisterPage> {
                 ),
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                  child: const Row(
+                  child:  Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       SquareTile(
+                        onTap: () => AuthService().signInWithGoogle(),
                           imagePath: "assets/images/Login/GoogleIcon.png"),
-                      SizedBox(width: 20),
+                      const SizedBox(width: 20),
                       SquareTile(
+                        onTap: () => AuthService().signInWithGoogle(),
                           imagePath: "assets/images/Login/AppleIcon.png"),
                     ],
                   ),

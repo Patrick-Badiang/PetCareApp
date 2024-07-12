@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:pet_care_app/main.dart';
+import 'package:pet_care_app/services/auth_service.dart';
 import 'package:pet_care_app/utils/my_sign_in_button.dart';
 import 'package:pet_care_app/utils/my_square_tile.dart';
 import 'package:pet_care_app/utils/styled_text_field.dart';
@@ -11,7 +12,11 @@ import 'firebase_options.dart';
 
 class LoginPage extends StatefulWidget {
   final Function()? onTap;
-  const LoginPage({super.key, required this.onTap});
+
+  const LoginPage({
+    super.key,
+    required this.onTap,
+  });
 
   @override
   State<LoginPage> createState() => _LoginPageState();
@@ -37,14 +42,12 @@ class _LoginPageState extends State<LoginPage> {
         email: emailController.text
             .trim(), // Trim to remove any leading/trailing whitespace
         password: passwordController.text,
-
-        
       );
       //Pop out the loading circle
-    Navigator.pop(context);
+      Navigator.pop(context);
     } on FirebaseAuthException catch (e) {
       //Pop out the loading circle
-    Navigator.pop(context);
+      Navigator.pop(context);
       if (e.code == 'invalid-credential') {
         // Handle the invalid credential error
         showError('Invalid credentials');
@@ -57,11 +60,9 @@ class _LoginPageState extends State<LoginPage> {
       // Handle any other exceptions
       showError('An unexpected error occurred: $e');
     }
-
-    
   }
 
-  void showError(String message){
+  void showError(String message) {
     showDialog(
       context: context,
       builder: (context) {
@@ -171,12 +172,16 @@ class _LoginPageState extends State<LoginPage> {
               ),
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                child: const Row(
+                child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    SquareTile(imagePath: "assets/images/Login/GoogleIcon.png"),
-                    SizedBox(width: 20),
-                    SquareTile(imagePath: "assets/images/Login/AppleIcon.png"),
+                    SquareTile(
+                        onTap: () => AuthService().signInWithGoogle(),
+                        imagePath: "assets/images/Login/GoogleIcon.png"),
+                    const SizedBox(width: 20),
+                    SquareTile(
+                        onTap: () => AuthService().signInWithGoogle(),
+                        imagePath: "assets/images/Login/AppleIcon.png"),
                   ],
                 ),
               ),
