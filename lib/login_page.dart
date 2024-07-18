@@ -176,11 +176,11 @@ class _LoginPageState extends State<LoginPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     SquareTile(
-                        onTap: () => AuthService().signInWithGoogle(),
+                        onTap: () => AuthService(context: context).signInWithGoogle(),
                         imagePath: "assets/images/Login/GoogleIcon.png"),
                     const SizedBox(width: 20),
                     SquareTile(
-                        onTap: () => AuthService().signInWithGoogle(),
+                        onTap: () => AuthService(context: context).signInWithGoogle(),
                         imagePath: "assets/images/Login/AppleIcon.png"),
                   ],
                 ),
