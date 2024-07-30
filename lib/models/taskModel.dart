@@ -61,7 +61,7 @@ class TaskTile extends StatelessWidget {
                     Text(
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
-                        decoration: isDone
+                        decoration: document['isDone']
                             ? TextDecoration.lineThrough
                             : TextDecoration.none,
                       ),
@@ -69,7 +69,7 @@ class TaskTile extends StatelessWidget {
                     ),
                     const Spacer(),
                     Container(
-                        child: isDone
+                        child: document['isDone']
                             ? IconButton(
                                 onPressed: () => onDelete?.call(context),
                                 icon: const  Icon(Icons.delete))

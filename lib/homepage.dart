@@ -118,8 +118,6 @@ class _HomePageState extends State<HomePage> {
                       itemBuilder: (context, index) {
                         return TaskTile(
                           document: snapshot.data!.docs[index],
-                          taskName: snapshot.data!.docs[index]['task'],
-                          isDone: snapshot.data!.docs[index]['isDone'],
                           onChanged: (context) => {
                             FirebaseFirestore.instance.runTransaction((transactionHandler) async {
                               DocumentSnapshot freshSnap =
