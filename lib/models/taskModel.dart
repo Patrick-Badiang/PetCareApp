@@ -1,18 +1,18 @@
 // ignore: file_names
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_slidable/flutter_slidable.dart';
 
 // ignore: must_be_immutable
 class TaskTile extends StatelessWidget {
-  final String taskName;
-  final bool isDone;
+  final DocumentSnapshot document;
   Function(bool?)? onChanged;
   Function(BuildContext?)? onDelete;
 
-  TaskTile({super.key, 
-    required this.taskName,
-    required this.isDone,
+  TaskTile({
+    super.key, 
+    required this.document,
     required this.onChanged,
     required this.onDelete,
   });
@@ -20,7 +20,6 @@ class TaskTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(taskName);
     return SizedBox(
         height: 50,
         child: Row(
@@ -29,7 +28,7 @@ class TaskTile extends StatelessWidget {
 
             Checkbox(
               focusColor: Colors.white,
-              value: isDone,
+              value: document['isDone'],
               onChanged: onChanged,
               activeColor: Colors.white,
               checkColor: Colors.black,
@@ -66,7 +65,7 @@ class TaskTile extends StatelessWidget {
                             ? TextDecoration.lineThrough
                             : TextDecoration.none,
                       ),
-                      taskName,
+                      document['task'],
                     ),
                     const Spacer(),
                     Container(

@@ -40,13 +40,10 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-  void _taskClicked(bool? value, int index) {
-    setState(() {
-      db.tasks[index][1] = !db.tasks[index][1];
-    });
+  // void _taskClicked(bool? value, DocumentSnapshot index) {
 
-    db.updateDataBase();
-  }
+    
+  // }
 
   void _addTask() {
     showDialog(
@@ -120,9 +117,16 @@ class _HomePageState extends State<HomePage> {
                           const SizedBox(height: 10),
                       itemBuilder: (context, index) {
                         return TaskTile(
+                          document: snapshot.data!.docs[index],
                           taskName: snapshot.data!.docs[index]['task'],
                           isDone: snapshot.data!.docs[index]['isDone'],
-                          onChanged: (value) => _taskClicked(value, index),
+                          onChanged: (context) => {
+                            FirebaseFirestore.instance.runTransaction((transactionHandler) async {
+                              DocumentSnapshot freshSnap =
+                               await transactionHandler.get(snapshot.data!.docs[index].reference);
+                              await transactionHandler.update(freshSnap.reference, {'isDone': !freshSnap['isDone']});
+                            })
+                          },
                           onDelete: (context) => deleteTask(index),
                         );
                       },
