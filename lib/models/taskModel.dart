@@ -17,8 +17,10 @@ class TaskTile extends StatelessWidget {
     required this.onDelete,
   });
 
+
   @override
   Widget build(BuildContext context) {
+    print(taskName);
     return SizedBox(
         height: 50,
         child: Row(

@@ -6,6 +6,8 @@ import 'package:pet_care_app/models/taskModel.dart';
 import 'package:pet_care_app/topWidget.dart';
 import 'package:pet_care_app/utils/dialog_box.dart';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
@@ -103,22 +105,29 @@ class _HomePageState extends State<HomePage> {
             // Wrap the Container in an Expanded widget
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 40.0),
-              child: ListView.separated(
-                padding: EdgeInsets.zero,
-                shrinkWrap: true,
-                scrollDirection: Axis.vertical,
-                itemCount: db.tasks.length,
-                separatorBuilder: (context, index) =>
-                    const SizedBox(height: 10),
-                itemBuilder: (context, index) {
-                  return TaskTile(
-                    taskName: db.tasks[index][0],
-                    isDone: db.tasks[index][1],
-                    onChanged: (value) => _taskClicked(value, index),
-                    onDelete: (context) => deleteTask(index),
-                  );
-                },
-              ),
+              child: StreamBuilder(
+                  stream:
+                      FirebaseFirestore.instance.collection('tasks').snapshots(),
+                  builder: (context, snapshot) {
+                    if (!snapshot.hasData) return const Text("Loading");
+                    
+                    return ListView.separated(
+                      padding: EdgeInsets.zero,
+                      shrinkWrap: true,
+                      scrollDirection: Axis.vertical,
+                      itemCount: snapshot.data!.docs.length,
+                      separatorBuilder: (context, index) =>
+                          const SizedBox(height: 10),
+                      itemBuilder: (context, index) {
+                        return TaskTile(
+                          taskName: snapshot.data!.docs[index]['task'],
+                          isDone: snapshot.data!.docs[index]['isDone'],
+                          onChanged: (value) => _taskClicked(value, index),
+                          onDelete: (context) => deleteTask(index),
+                        );
+                      },
+                    );
+                  }),
             ),
           ),
         ],
