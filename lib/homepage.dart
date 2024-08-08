@@ -23,7 +23,8 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   //reference  hive box
   final _myBox = Hive.box('mybox');
-  ToDoDatabase db = ToDoDatabase();
+
+  FirebaseFirestore  db = FirebaseFirestore.instance;
 
   //Text Controller
   final _controller = TextEditingController();
@@ -37,12 +38,7 @@ class _HomePageState extends State<HomePage> {
 
   void initApp() async {
     // If this is the first time opening the app then create default values
-    if (_myBox.get("TASKS") == null) {
-      db.createInitialData();
-    } else {
-      // There already exists data
-      db.loadData();
-    }
+    
   }
 
   // void _taskClicked(bool? value, DocumentSnapshot index) {
@@ -64,18 +60,11 @@ class _HomePageState extends State<HomePage> {
   }
 
   void saveNewTask() {
-    setState(() {
-      db.tasks.add([_controller.text, false]);
-    });
+    
     Navigator.of(context).pop();
 
-    final city = <String, String>{
-      "name": "Los Angeles",
-      "state": "CA",
-      "country": "USA"
-    };
 
-    FirebaseFirestore.instance.collection("tasks").doc().set(
+    db.collection("tasks").doc().set(
       <String, dynamic>{
         "isDone": false,
         "task": _controller.text,
@@ -84,11 +73,8 @@ class _HomePageState extends State<HomePage> {
     ).onError((e, _) => print("Error writing document: $e"));
   }
 
-  void deleteTask(int index) {
-    setState(() {
-      db.tasks.removeAt(index);
-    });
-    db.updateDataBase();
+  void deleteTask(String doc) {
+    db.collection("tasks").doc(doc).delete().onError((e, _) => print("Error deleting document: $e"));
   }
 
   @override
@@ -120,7 +106,7 @@ class _HomePageState extends State<HomePage> {
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 40.0),
               child: StreamBuilder(
-                  stream: FirebaseFirestore.instance
+                  stream: db
                       .collection('tasks').where("owner", isEqualTo: widget.user.uid).snapshots(),  
                   builder: (context, snapshot) {
                     if (!snapshot.hasData) return const Text("Loading");
@@ -147,7 +133,7 @@ class _HomePageState extends State<HomePage> {
                                   {'isDone': !freshSnap['isDone'] as bool});
                             })
                           },
-                          onDelete: (context) => deleteTask(index),
+                          onDelete: (context) => deleteTask(snapshot.data!.docs[index].reference.id),
                         );
                       },
                     );
