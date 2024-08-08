@@ -110,7 +110,7 @@ class _MyHomePageState extends State<MyHomePage> {
         body: [
           HomePage(user: user),
           Appointments(user: user),
-          const CaringPage(),
+          CaringPage(user: user),
         ][currentPageIndex]);
   }
 }

@@ -21,9 +21,7 @@ class Appointments extends StatefulWidget {
 }
 
 class _AppointmentsState extends State<Appointments> {
-  //reference hive box
-  final _appBox = Hive.box('mybox');
-  AppointmentDatabase apps = AppointmentDatabase();
+
 
   FirebaseFirestore db = FirebaseFirestore.instance;
 
@@ -38,11 +36,7 @@ class _AppointmentsState extends State<Appointments> {
 
   void initData() async {
     //if  it's first time, and  no  init data
-    if (_appBox.get("APPOINTMENTS") == null) {
-      apps.createInitialData();
-    } else {
-      apps.loadData();
-    }
+    
   }
 
   void _addAppointment(Type appointment) {

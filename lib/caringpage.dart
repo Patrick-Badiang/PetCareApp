@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -7,21 +8,25 @@ import 'package:pet_care_app/models/caringModel.dart';
 import 'package:pet_care_app/topWidget.dart';
 import 'package:pet_care_app/utils/dialog_box.dart';
 
-
 enum Type { vet, likes }
 
 class CaringPage extends StatefulWidget {
-  const CaringPage({super.key});
+  final user;
+  const CaringPage({
+    super.key,
+    required this.user,
+  });
 
   @override
   State<CaringPage> createState() => _CaringPageState();
 }
 
 class _CaringPageState extends State<CaringPage> {
-
   //reference  box
   final _myBox = Hive.box('mybox');
   CaringDatabase cares = CaringDatabase();
+
+  FirebaseFirestore db = FirebaseFirestore.instance;
 
   //Text Controller
   final _controller = TextEditingController();
@@ -33,13 +38,12 @@ class _CaringPageState extends State<CaringPage> {
   }
 
   void initData() async {
-        //if  it's first time, and  no  init data
-    if (_myBox.get("VETS") == null || _myBox.get("LIKES") == null){
+    //if  it's first time, and  no  init data
+    if (_myBox.get("VETS") == null || _myBox.get("LIKES") == null) {
       cares.createInitialData();
     } else {
       cares.loadData();
     }
-
   }
 
   void _addVet(Type add) {
@@ -54,35 +58,40 @@ class _CaringPageState extends State<CaringPage> {
         );
       },
     );
-
   }
 
   void saveNewAdd(Type add) {
-    setState(() {
-      if (add == Type.vet) {
-        cares.vets.add(
-            [ true,_controller.text]);
-      } else {
-        cares.likes.add(
-            [false, _controller.text]);
-      }
-    });
+    
 
     Navigator.of(context).pop();
-    cares.updateDataBase();
 
+    if (add == Type.vet) {
+      db.collection("vets").doc().set(
+        <String, dynamic>{
+          "name": _controller.text,
+          "isVet": true,
+          "owner": widget.user.uid,
+        },
+      ).onError((e, _) => print("Error writing document: $e"));
+    } else {
+      db.collection("likes").doc().set(
+        <String, dynamic>{
+          "name": _controller.text,
+          "isVet": false,
+          "owner": widget.user.uid,
+        },
+      ).onError((e, _) => print("Error writing document: $e"));
+    }
+    
   }
 
-  void onDelete(Type add, int index) {
-    setState(() {
-      if (add == Type.vet) {
-        cares.vets.removeAt(index);
-      } else {
-        cares.likes.removeAt(index);
-      }
-    });
-    cares.updateDataBase();
-
+  void onDelete(Type add, String doc) {
+    if (add == Type.vet) {
+      db.collection("vets").doc(doc).delete().onError((e, _) => print("Error deleting document: $e"));
+    } else {
+      db.collection("likes").doc(doc).delete().onError((e, _) => print("Error deleting document: $e"));
+    }
+    
   }
 
   @override
@@ -118,18 +127,24 @@ class _CaringPageState extends State<CaringPage> {
             ),
             const SizedBox(height: 20),
             Expanded(
-              child: ListView.separated(
-                shrinkWrap: true,
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                separatorBuilder: (context, index) => const SizedBox(height: 10),
-                itemCount: cares.vets.length,
-                itemBuilder: (context, index) {
-                  return CaringModel(
-                    isVet: cares.vets[index][0],
-                    name: cares.vets[index][1],
-                    onDelete: (context) => onDelete(Type.vet,index),
+              child: StreamBuilder(
+                stream: db.collection("vets").where("owner", isEqualTo: widget.user.uid).snapshots(),
+                builder: (context, snapshot) {
+                  if (!snapshot.hasData) return const Text("Loading");
+                  return ListView.separated(
+                    shrinkWrap: true,
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    separatorBuilder: (context, index) =>
+                        const SizedBox(height: 10),
+                    itemCount: snapshot.data!.docs.length,
+                    itemBuilder: (context, index) {
+                      return CaringModel(
+                        document: snapshot.data!.docs[index],
+                        onDelete: (context) => onDelete(Type.vet, snapshot.data!.docs[index].reference.id),
+                      );
+                    },
                   );
-                },
+                }
               ),
             ),
             const SizedBox(height: 20),
@@ -141,19 +156,27 @@ class _CaringPageState extends State<CaringPage> {
               height: 20,
             ),
             Expanded(
-                child: ListView.separated(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              separatorBuilder: (context, index) => const SizedBox(height: 10),
-              itemCount: cares.likes.length,
-              itemBuilder: (context, index) {
-                return CaringModel(
-                  isVet: cares.likes[index][0],
-                  name: cares.likes[index][1],
-                  onDelete: (context) => onDelete(Type.likes,index),
+                child: StreamBuilder(
+                    stream: db
+                        .collection("likes")
+                        .where("owner", isEqualTo: widget.user.uid)
+                        .snapshots(),
+                    builder: (context, snapshot) {
+                      if(!snapshot.hasData) return const Text("Loading");
 
-                );
-              },
-            )),
+                      return ListView.separated(
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        separatorBuilder: (context, index) =>
+                            const SizedBox(height: 10),
+                        itemCount: snapshot.data!.docs.length,
+                        itemBuilder: (context, index) {
+                          return CaringModel(
+                            document: snapshot.data!.docs[index],
+                            onDelete: (context) => onDelete(Type.likes, snapshot.data!.docs[index].reference.id),
+                          );
+                        },
+                      );
+                    })),
           ],
         ));
   }

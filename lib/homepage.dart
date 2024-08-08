@@ -21,8 +21,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  //reference  hive box
-  final _myBox = Hive.box('mybox');
 
   FirebaseFirestore  db = FirebaseFirestore.instance;
 
