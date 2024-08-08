@@ -109,7 +109,7 @@ class _MyHomePageState extends State<MyHomePage> {
         //Body depending on navigation bar
         body: [
           HomePage(user: user),
-          const Appointments(),
+          Appointments(user: user),
           const CaringPage(),
         ][currentPageIndex]);
   }

@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -6,14 +7,14 @@ import 'package:pet_care_app/models/appointmentModel.dart';
 import 'package:pet_care_app/topWidget.dart';
 import 'package:pet_care_app/utils/dialog_box.dart';
 
-
 enum Type {
   vaccine,
   grooming,
 }
 
 class Appointments extends StatefulWidget {
-  const Appointments({super.key});
+  final user;
+  const Appointments({super.key, required this.user});
 
   @override
   State<Appointments> createState() => _AppointmentsState();
@@ -23,6 +24,8 @@ class _AppointmentsState extends State<Appointments> {
   //reference hive box
   final _appBox = Hive.box('mybox');
   AppointmentDatabase apps = AppointmentDatabase();
+
+  FirebaseFirestore db = FirebaseFirestore.instance;
 
   //Text Controller
   final _controller = TextEditingController();
@@ -34,13 +37,12 @@ class _AppointmentsState extends State<Appointments> {
   }
 
   void initData() async {
-     //if  it's first time, and  no  init data
+    //if  it's first time, and  no  init data
     if (_appBox.get("APPOINTMENTS") == null) {
       apps.createInitialData();
     } else {
       apps.loadData();
     }
-
   }
 
   void _addAppointment(Type appointment) {
@@ -55,31 +57,34 @@ class _AppointmentsState extends State<Appointments> {
         );
       },
     );
-
   }
 
   void saveNewAppointment(Type appointment) {
-    setState(() {
-      if (appointment == Type.vaccine) {
-        apps.appointments.add(
-            ["assets/images/needle.png", _controller.text, true]);
-      } else {
-        apps.appointments.add(
-            ["assets/images/dog.png", _controller.text, false]);
-      }
-    });
-
     Navigator.of(context).pop();
-    apps.updateDataBase();
 
+    if (appointment == Type.vaccine) {
+      db.collection("appointments").doc().set(
+        <String, dynamic>{
+          "image": "assets/images/needle.png",
+          "name": _controller.text,
+          "isVet": true,
+          "owner": widget.user.uid,
+        },
+      ).onError((e, _) => print("Error writing document: $e"));
+    } else {
+      db.collection("appointments").doc().set(
+        <String, dynamic>{
+          "image": "assets/images/dog.png",
+          "name": _controller.text,
+          "isVet": false,
+          "owner": widget.user.uid,
+        },
+      ).onError((e, _) => print("Error writing document: $e"));
+    }
   }
 
-  void deleteTask(int index){
-    setState(() {
-      apps.appointments.removeAt(index);
-    });
-    apps.updateDataBase();
-
+  void deleteTask(String doc) {
+    db.collection("appointments").doc(doc).delete().onError((e, _) => print("Error deleting document: $e"));
   }
 
   @override
@@ -109,21 +114,29 @@ class _AppointmentsState extends State<Appointments> {
             height: 20,
           ),
           Expanded(
-            child: ListView.separated(
-              padding: const EdgeInsets.symmetric(horizontal: 30.0),
-              shrinkWrap: true,
-              scrollDirection: Axis.vertical,
-              separatorBuilder: (context, index) => const SizedBox(height: 10),
-              itemCount: apps.appointments.length,
-              itemBuilder: (context, index) {
-                return AppointmentModel(
-                  path: apps.appointments[index][0],
-                  name: apps.appointments[index][1],
-                  isVet: apps.appointments[index][2],
-                  onDelete: (context) => deleteTask(index),
-                );
-              },
-            ),
+            child: StreamBuilder(
+                stream: db
+                    .collection("appointments")
+                    .where("owner", isEqualTo: widget.user.uid)
+                    .snapshots(),
+                builder: (context, snapshot) {
+                  if (!snapshot.hasData) return const Text("Loading");
+
+                  return ListView.separated(
+                    padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                    shrinkWrap: true,
+                    scrollDirection: Axis.vertical,
+                    separatorBuilder: (context, index) =>
+                        const SizedBox(height: 10),
+                    itemCount: snapshot.data!.docs.length,
+                    itemBuilder: (context, index) {
+                      return AppointmentModel(
+                        document: snapshot.data!.docs[index],
+                        onDelete: (context) => deleteTask(snapshot.data!.docs[index].reference.id),
+                      );
+                    },
+                  );
+                }),
           ),
         ],
       ),
