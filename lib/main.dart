@@ -56,7 +56,8 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final user = FirebaseAuth.instance.currentUser!;
+    final user = FirebaseAuth.instance.currentUser!;
+
   int currentPageIndex = 0;
 
   void signUserOut() async {
@@ -107,7 +108,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
         //Body depending on navigation bar
         body: [
-          const HomePage(),
+          HomePage(user: user),
           const Appointments(),
           const CaringPage(),
         ][currentPageIndex]);

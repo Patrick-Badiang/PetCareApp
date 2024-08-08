@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:pet_care_app/data/database.dart';
@@ -9,7 +10,11 @@ import 'package:pet_care_app/utils/dialog_box.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  final user;
+  const HomePage({
+    super.key,
+    required this.user,
+  });
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -42,7 +47,6 @@ class _HomePageState extends State<HomePage> {
 
   // void _taskClicked(bool? value, DocumentSnapshot index) {
 
-    
   // }
 
   void _addTask() {
@@ -64,7 +68,20 @@ class _HomePageState extends State<HomePage> {
       db.tasks.add([_controller.text, false]);
     });
     Navigator.of(context).pop();
-    db.updateDataBase();
+
+    final city = <String, String>{
+      "name": "Los Angeles",
+      "state": "CA",
+      "country": "USA"
+    };
+
+    FirebaseFirestore.instance.collection("tasks").doc().set(
+      <String, dynamic>{
+        "isDone": false,
+        "task": _controller.text,
+        "owner": widget.user.uid,
+      },
+    ).onError((e, _) => print("Error writing document: $e"));
   }
 
   void deleteTask(int index) {
@@ -103,11 +120,11 @@ class _HomePageState extends State<HomePage> {
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 40.0),
               child: StreamBuilder(
-                  stream:
-                      FirebaseFirestore.instance.collection('tasks').snapshots(),
+                  stream: FirebaseFirestore.instance
+                      .collection('tasks').where("owner", isEqualTo: widget.user.uid).snapshots(),  
                   builder: (context, snapshot) {
                     if (!snapshot.hasData) return const Text("Loading");
-                    
+
                     return ListView.separated(
                       padding: EdgeInsets.zero,
                       shrinkWrap: true,
@@ -118,11 +135,16 @@ class _HomePageState extends State<HomePage> {
                       itemBuilder: (context, index) {
                         return TaskTile(
                           document: snapshot.data!.docs[index],
+                          isDone: snapshot.data!.docs[index]['isDone'] as bool,
                           onChanged: (context) => {
-                            FirebaseFirestore.instance.runTransaction((transactionHandler) async {
+                            FirebaseFirestore.instance
+                                .runTransaction((transactionHandler) async {
                               DocumentSnapshot freshSnap =
-                               await transactionHandler.get(snapshot.data!.docs[index].reference);
-                              await transactionHandler.update(freshSnap.reference, {'isDone': !freshSnap['isDone']});
+                                  await transactionHandler.get(
+                                      snapshot.data!.docs[index].reference);
+                              await transactionHandler.update(
+                                  freshSnap.reference,
+                                  {'isDone': !freshSnap['isDone'] as bool});
                             })
                           },
                           onDelete: (context) => deleteTask(index),

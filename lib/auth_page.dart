@@ -6,6 +6,8 @@ import 'package:pet_care_app/main.dart';
 class AuthPage extends StatelessWidget {
   const AuthPage({super.key});
 
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -17,7 +19,7 @@ class AuthPage extends StatelessWidget {
           
           if (snapshot.hasData) {
             //if user is logged in
-            return const MyHomePage();
+            return MyHomePage();
           } else {
             //if user is logged out
             return const LoginOrRegisterPage();

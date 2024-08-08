@@ -7,12 +7,15 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 // ignore: must_be_immutable
 class TaskTile extends StatelessWidget {
   final DocumentSnapshot document;
+  final bool? isDone;
   Function(bool?)? onChanged;
   Function(BuildContext?)? onDelete;
+
 
   TaskTile({
     super.key, 
     required this.document,
+    required this.isDone,
     required this.onChanged,
     required this.onDelete,
   });
@@ -28,7 +31,7 @@ class TaskTile extends StatelessWidget {
 
             Checkbox(
               focusColor: Colors.white,
-              value: document['isDone'],
+              value: isDone,
               onChanged: onChanged,
               activeColor: Colors.white,
               checkColor: Colors.black,
