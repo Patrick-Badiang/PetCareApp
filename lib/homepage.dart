@@ -103,8 +103,7 @@ class _HomePageState extends State<HomePage> {
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 40.0),
               child: StreamBuilder(
-                  stream: db
-                      .collection('tasks').where("owner", isEqualTo: widget.user.uid).snapshots(),  
+                  stream: db.collection('tasks').where("owner", isEqualTo: widget.user.uid).snapshots(),  
                   builder: (context, snapshot) {
                     if (!snapshot.hasData) return const Text("Loading");
 
@@ -116,7 +115,8 @@ class _HomePageState extends State<HomePage> {
                       separatorBuilder: (context, index) =>
                           const SizedBox(height: 10),
                       itemBuilder: (context, index) {
-                        return TaskTile(
+                        
+                          return TaskTile(
                           document: snapshot.data!.docs[index],
                           isDone: snapshot.data!.docs[index]['isDone'] as bool,
                           onChanged: (context) => {
@@ -132,6 +132,9 @@ class _HomePageState extends State<HomePage> {
                           },
                           onDelete: (context) => deleteTask(snapshot.data!.docs[index].reference.id),
                         );
+
+                        
+                        
                       },
                     );
                   }),
