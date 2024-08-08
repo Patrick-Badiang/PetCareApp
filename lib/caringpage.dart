@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:pet_care_app/data/database.dart';
 
 import 'package:pet_care_app/models/caringModel.dart';
 import 'package:pet_care_app/topWidget.dart';
@@ -22,9 +21,7 @@ class CaringPage extends StatefulWidget {
 }
 
 class _CaringPageState extends State<CaringPage> {
-  //reference  box
-  final _myBox = Hive.box('mybox');
-  CaringDatabase cares = CaringDatabase();
+
 
   FirebaseFirestore db = FirebaseFirestore.instance;
 
@@ -39,11 +36,7 @@ class _CaringPageState extends State<CaringPage> {
 
   void initData() async {
     //if  it's first time, and  no  init data
-    if (_myBox.get("VETS") == null || _myBox.get("LIKES") == null) {
-      cares.createInitialData();
-    } else {
-      cares.loadData();
-    }
+    
   }
 
   void _addVet(Type add) {

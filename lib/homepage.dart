@@ -1,7 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
-import 'package:pet_care_app/data/database.dart';
 
 import 'package:pet_care_app/models/taskModel.dart';
 import 'package:pet_care_app/topWidget.dart';
