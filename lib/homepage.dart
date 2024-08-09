@@ -20,8 +20,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-
-  FirebaseFirestore  db = FirebaseFirestore.instance;
+  FirebaseFirestore db = FirebaseFirestore.instance;
 
   //Text Controller
   final _controller = TextEditingController();
@@ -35,7 +34,6 @@ class _HomePageState extends State<HomePage> {
 
   void initApp() async {
     // If this is the first time opening the app then create default values
-    
   }
 
   // void _taskClicked(bool? value, DocumentSnapshot index) {
@@ -57,9 +55,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   void saveNewTask() {
-    
     Navigator.of(context).pop();
-
 
     db.collection("tasks").doc().set(
       <String, dynamic>{
@@ -71,7 +67,11 @@ class _HomePageState extends State<HomePage> {
   }
 
   void deleteTask(String doc) {
-    db.collection("tasks").doc(doc).delete().onError((e, _) => print("Error deleting document: $e"));
+    db
+        .collection("tasks")
+        .doc(doc)
+        .delete()
+        .onError((e, _) => print("Error deleting document: $e"));
   }
 
   @override
@@ -89,7 +89,23 @@ class _HomePageState extends State<HomePage> {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
-          const TopWidget(subText: "My Name is:", title: "Kuber Badiang"),
+          StreamBuilder<QuerySnapshot>(
+              stream: db.collection("pets").where("owner", isEqualTo: widget.user.uid).snapshots(),
+              builder: (context, snapshot) {
+                if (snapshot.hasError) {
+                  return Text('Error: ${snapshot.error}');
+                }
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Text('Loading...');
+                }
+
+                // Assuming only one pet per user
+                final petData = snapshot.data!.docs.first.data() as Map<String, dynamic>;
+                final petName = petData['name']; // Replace 'petName' with the actual field name
+
+                return TopWidget(
+                    subText: "My Name is:", title: petName);
+              }),
           const SizedBox(height: 20),
           const Center(child: VetCard()),
           const SizedBox(height: 30),
@@ -103,7 +119,10 @@ class _HomePageState extends State<HomePage> {
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 40.0),
               child: StreamBuilder(
-                  stream: db.collection('tasks').where("owner", isEqualTo: widget.user.uid).snapshots(),  
+                  stream: db
+                      .collection('tasks')
+                      .where("owner", isEqualTo: widget.user.uid)
+                      .snapshots(),
                   builder: (context, snapshot) {
                     if (!snapshot.hasData) return const Text("Loading");
 
@@ -115,8 +134,7 @@ class _HomePageState extends State<HomePage> {
                       separatorBuilder: (context, index) =>
                           const SizedBox(height: 10),
                       itemBuilder: (context, index) {
-                        
-                          return TaskTile(
+                        return TaskTile(
                           document: snapshot.data!.docs[index],
                           isDone: snapshot.data!.docs[index]['isDone'] as bool,
                           onChanged: (context) => {
@@ -130,11 +148,9 @@ class _HomePageState extends State<HomePage> {
                                   {'isDone': !freshSnap['isDone'] as bool});
                             })
                           },
-                          onDelete: (context) => deleteTask(snapshot.data!.docs[index].reference.id),
+                          onDelete: (context) => deleteTask(
+                              snapshot.data!.docs[index].reference.id),
                         );
-
-                        
-                        
                       },
                     );
                   }),
