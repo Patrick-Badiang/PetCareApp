@@ -61,6 +61,7 @@ class _MyHomePageState extends State<MyHomePage> {
   int currentPageIndex = 0;
 
   void signUserOut() async {
+    
     await FirebaseAuth.instance.signOut();
   }
 

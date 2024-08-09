@@ -5,38 +5,53 @@ import 'package:pet_care_app/login_register_page.dart';
 import 'package:pet_care_app/main.dart';
 import 'package:pet_care_app/new_user_page.dart';
 
-class AuthPage extends StatelessWidget {
+class AuthPage extends StatefulWidget {
   const AuthPage({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: StreamBuilder<User?>(
-        //if user is logged in  or out
-        stream: FirebaseAuth.instance.authStateChanges(),
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            User? user = FirebaseAuth.instance.currentUser;
+  State<AuthPage> createState() => _AuthPageState();
+}
 
-      if (user == null){
-        return const Text("Login failed");
-      }
-      user.reload();
-      var metadata = user.metadata;
-      if (metadata.creationTime == metadata.lastSignInTime) {
-        // The user is new, show them a fancy intro screen!
-        return const NewUser();
-      } else {
-        // This is an existing user, show them a welcome back screen.
-        return const MyHomePage(); 
-      }
-    
+class _AuthPageState extends State<AuthPage> {
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder<User?>(
+      stream: FirebaseAuth.instance.authStateChanges(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.active) {
+          final user = snapshot.data;
+          if (user != null) {
+            return FutureBuilder<DocumentSnapshot>(
+              future: FirebaseFirestore.instance
+                  .collection('users')
+                  .doc(user.uid)
+                  .get(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.done) {
+                  final userDoc = snapshot.data;
+                  if (userDoc?.exists ?? false) {
+                    final isNewUser = userDoc!['isNewUser'] as bool;
+                    return isNewUser ? NewUser(user: user) : MyHomePage();
+                  } else {
+                    // Create a new user document with isNewUser set to true
+                    FirebaseFirestore.instance
+                        .collection('users')
+                        .doc(user.uid)
+                        .set({'isNewUser': true});
+                    return NewUser(user: user);
+                  }
+                } else {
+                  return const CircularProgressIndicator();
+                }
+              },
+            );
           } else {
-            //if user is logged out
-            return const LoginOrRegisterPage();
+            return LoginOrRegisterPage(); // Or your login page
           }
-        },
-      ),
+        } else {
+          return const CircularProgressIndicator();
+        }
+      },
     );
   }
 }

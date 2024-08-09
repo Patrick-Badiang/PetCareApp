@@ -33,6 +33,7 @@ dependencies:
   hive: ^2.2.3
   hive_flutter: ^1.1.0
   flutter_speed_dial: ^4.3.0
+  shared_preferences: ^2.0.6
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -75,6 +76,7 @@ flutter:
     - assets/images/dogoutline.png
     - assets/images/clock.png
     - assets/images/RegisterPhoto.png
+    - assets/images/PetCentLogo.png
     - assets/images/Login/LoginPhoto.png
     - assets/images/Login/GoogleIcon.png
     - assets/images/Login/AppleIcon.png
