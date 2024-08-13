@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:pet_care_app/auth_page.dart';
+import 'package:pet_care_app/login_register_page.dart';
 import 'package:pet_care_app/main.dart';
 import 'package:pet_care_app/utils/my_sign_in_button.dart';
 import 'package:pet_care_app/utils/styled_text_field.dart';
@@ -16,6 +17,9 @@ class NewUser extends StatefulWidget {
 
 class _NewUserState extends State<NewUser> {
   final nameController = TextEditingController();
+  final  vetNameController = TextEditingController();
+  final vetLocationController = TextEditingController();
+  final vetPhoneController = TextEditingController();   
 
   void addPetName(BuildContext context, String name, String ownerUid) async {
     try {
@@ -36,10 +40,10 @@ class _NewUserState extends State<NewUser> {
       Navigator.pop(context);
 
       // Update isNewUser to false
-    await FirebaseFirestore.instance
-        .collection('users')
-        .doc(ownerUid)
-        .update({'isNewUser': false});
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(ownerUid)
+          .update({'isNewUser': false});
 
       // Show success message or navigate to another page
       ScaffoldMessenger.of(context).showSnackBar(
@@ -72,28 +76,83 @@ class _NewUserState extends State<NewUser> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
+              //Go back button
+              Row(
+                children: [
+                  IconButton(
+                    icon: const Icon(Icons.arrow_back),
+                    onPressed: () {
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(builder: (context) => const LoginOrRegisterPage()),
+                      );
+                    },
+                  ),
+                ],
+              ),
               //Login  Icon
-              const SizedBox(height: 25),
-              Image.asset("assets/images/PetCentLogo.png"),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox(
+                      height: 50,
+                      child: Image.asset("assets/images/PetCentLogo.png")),
+                  const Text("Pet Cent", style: TextStyle(fontSize: 30)),
+                ],
+              ),
 
               //Welcome back text
-              const SizedBox(height: 50),
+              const SizedBox(height: 20),
               const Text(
-                "Welcome to Pet Cent!",
+                "Let's get you setup",
                 style: TextStyle(fontSize: 30, color: Colors.black),
               ),
 
               //Email and Password TextFields
               const SizedBox(height: 25),
+              const Text("About your pet"),
               StyledTextField(
                 controller: nameController,
                 hintText: 'Enter your pet\'s name',
                 obscureText: false,
               ),
-              //Continue  Button
-              const SizedBox(
-                height: 25,
+
+              //Veterinarian Name
+              const SizedBox(height: 20),
+              const Text("About your veterinarian"),
+
+              StyledTextField(
+                controller: vetNameController,
+                hintText: 'Enter your veterinarian\'s name',
+                obscureText: false,
               ),
+              //Veterinarian Location
+              const SizedBox(height: 20),
+              StyledTextField(
+                controller: vetLocationController,
+                hintText: 'Enter your veterinarian\'s location',
+                obscureText: false,
+              ),
+              //Veterinarian Phone Number
+              const SizedBox(height: 20),
+              StyledTextField(
+                controller: vetPhoneController,
+                hintText: 'Enter your veterinarian\'s phone number',
+                obscureText: false,
+              ),
+
+              //Upload Image
+              const SizedBox(height: 20),
+              const Text("Upload an image of your pet"),
+              const SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: () {},
+                child: const Text("Upload Image"),
+              ),
+
+
+              //Continue  Button
+              const Spacer(),
               MySignInButton(
                 text: "Continue",
                 onTap: () =>
