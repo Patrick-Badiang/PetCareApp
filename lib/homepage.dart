@@ -1,6 +1,5 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:hive/hive.dart';
 
 import 'package:pet_care_app/models/taskModel.dart';
 import 'package:pet_care_app/topWidget.dart';
@@ -172,21 +171,34 @@ class VetCard extends StatelessWidget {
       decoration: BoxDecoration(
           color: const Color.fromARGB(217, 217, 217, 217),
           borderRadius: BorderRadius.circular(15)),
-      child: const Column(
+      child:  Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           Center(
-            child: Text(
-              'Vetenarian Information',
-              style: TextStyle(
-                fontSize: 20,
+                child: Row(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(left: 20.0),
+                      child: const Text(
+                        'Vetenarian Information',
+                        style: TextStyle(
+                          fontSize: 20,
+                        ),
+                      ),
+                    ),
+                    IconButton(
+                icon: const  Icon(Icons.edit),
+                onPressed: () {},),
+                  ],
+                ),
               ),
-            ),
-          ),
-          SizedBox(height: 10),
-          Padding(
+              
+            
+          
+          const SizedBox(height: 10),
+          const Padding(
             padding: EdgeInsets.only(left: 20.0),
             child: Row(
               children: [
@@ -210,8 +222,8 @@ class VetCard extends StatelessWidget {
               ],
             ),
           ),
-          SizedBox(height: 10),
-          Padding(
+          const SizedBox(height: 10),
+          const Padding(
             padding: EdgeInsets.only(left: 20.0),
             child: Row(
               children: [
@@ -235,8 +247,8 @@ class VetCard extends StatelessWidget {
               ],
             ),
           ),
-          SizedBox(height: 10),
-          Padding(
+          const SizedBox(height: 10),
+          const Padding(
             padding: EdgeInsets.only(left: 20.0),
             child: Row(
               children: [
@@ -260,7 +272,7 @@ class VetCard extends StatelessWidget {
               ],
             ),
           ),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
         ],
       ),
     );

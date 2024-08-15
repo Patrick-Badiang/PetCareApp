@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 import 'package:pet_care_app/models/appointmentModel.dart';
 import 'package:pet_care_app/topWidget.dart';
 import 'package:pet_care_app/utils/dialog_box.dart';

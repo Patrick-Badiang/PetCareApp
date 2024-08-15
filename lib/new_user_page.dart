@@ -82,10 +82,10 @@ class _NewUserState extends State<NewUser> {
                   IconButton(
                     icon: const Icon(Icons.arrow_back),
                     onPressed: () {
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(builder: (context) => const LoginOrRegisterPage()),
-                      );
+                      // Navigator.pushReplacement(
+                      //   context,
+                      //   MaterialPageRoute(builder: (context) => const LoginOrRegisterPage()),
+                      // );
                     },
                   ),
                 ],
