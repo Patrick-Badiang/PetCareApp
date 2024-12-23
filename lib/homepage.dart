@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:petcent/components/VetCard.dart';
 
 import 'package:petcent/models/taskModel.dart';
-import 'package:petcent/topWidget.dart';
+import 'package:petcent/components/topWidget.dart';
 import 'package:petcent/utils/dialog_box.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -92,39 +92,42 @@ class _HomePageState extends State<HomePage> {
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
           StreamBuilder<QuerySnapshot>(
-              stream: db.collection("pets").where("owner", isEqualTo: widget.user.uid).snapshots(),
-              builder: (context, snapshot) {
-                if (snapshot.hasError) {
-                  return Text('Error: ${snapshot.error}');
-                }
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Text('Loading...');
-                }
+            stream: db.collection("pets").where("owner", isEqualTo: widget.user.uid).snapshots(),
+            builder: (context, snapshot) {
+              if (snapshot.hasError) {
+                return Text('Error: ${snapshot.error}');
+              }
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Text('Loading...');
+              }
 
-                // Assuming only one pet per user
-                final petData = snapshot.data!.docs.first.data() as Map<String, dynamic>;
-                final petName = petData['name']; // Replace 'name' with the actual field name if different
-                final vetName = petData['vetName'] ?? 'N/A';
-                final vetNumber = petData['vetNumber'] ?? 'N/A';
-                final vetLocation = petData['vetLocation'] ?? 'N/A';
+              // Assuming only one pet per user
+              final document = snapshot.data!.docs.first;
+              final petData = document.data() as Map<String, dynamic>;
+              final petName = petData['name']; // Replace 'name' with the actual field name if different
+              final vetName = petData['vetName'] ?? 'N/A';
+              final vetNumber = petData['vetNumber'] ?? 'N/A';
+              final vetLocation = petData['vetLocation'] ?? 'N/A';
 
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    TopWidget(
-                      subText: "My Name is:",
-                      title: petName,
-                    ),
-                    const SizedBox(height: 20),
-                    VetCard(
-                      vetName: vetName,
-                      vetNumber: vetNumber,
-                      vetLocation: vetLocation,
-                    ),
-                  ],
-                );
-              },
-            ),
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  TopWidget(
+                    subText: "My Name is:",
+                    title: petName,
+                  ),
+                  const SizedBox(height: 20),
+                  VetCard(
+                    vetName: vetName,
+                    vetNumber: vetNumber,
+                    vetLocation: vetLocation,
+                    document: document, // Pass the Firestore document
+                  ),
+                ],
+              );
+            },
+          ),
+
 
           const SizedBox(height: 30),
           const Padding(

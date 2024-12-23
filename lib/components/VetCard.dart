@@ -2,7 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 import 'package:petcent/models/taskModel.dart';
-import 'package:petcent/topWidget.dart';
+import 'package:petcent/components/topWidget.dart';
 import 'package:petcent/utils/dialog_box.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -12,12 +12,14 @@ class VetCard extends StatefulWidget {
   final String vetName;
   final String vetNumber;
   final String vetLocation;
+  final DocumentSnapshot document;
 
   const VetCard({
     Key? key,
     required this.vetName,
     required this.vetNumber,
     required this.vetLocation,
+    required this.document,
   }) : super(key: key);
 
   @override
@@ -39,7 +41,25 @@ class _VetCardState extends State<VetCard> {
     vetLocationController = TextEditingController(text: widget.vetLocation);
   }
 
-  void toggleEditing() {
+  void toggleEditing() async {
+    if (isEditing) {
+      // Save changes to Firestore
+      try {
+        await widget.document.reference.update({
+          'vetName': vetNameController.text,
+          'vetNumber': vetNumberController.text,
+          'vetLocation': vetLocationController.text,
+        });
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Changes saved successfully!')),
+        );
+      } catch (e) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Failed to save changes: $e')),
+        );
+      }
+    }
+
     setState(() {
       isEditing = !isEditing;
     });
@@ -91,7 +111,7 @@ class _VetCardState extends State<VetCard> {
 
   Widget _buildAttributeRow(String label, TextEditingController controller) {
     return Padding(
-      padding: const EdgeInsets.only(left: 20.0, right: 15.0),
+      padding: const EdgeInsets.only(left: 20.0),
       child: Row(
         children: [
           Text(
