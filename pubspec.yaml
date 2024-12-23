@@ -31,6 +31,7 @@ dependencies:
   flutter:
     sdk: flutter
   hive: ^2.2.3
+  image_picker: ^1.1.2
   hive_flutter: ^1.1.0
   flutter_speed_dial: ^4.3.0
   shared_preferences: ^2.0.6
@@ -44,6 +45,7 @@ dependencies:
   firebase_core: ^3.2.0
   google_sign_in: ^6.2.1
   cloud_firestore: ^5.1.0
+  firebase_storage: ^12.3.7
 
 dev_dependencies:
   flutter_test:

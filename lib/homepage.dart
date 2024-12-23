@@ -102,13 +102,29 @@ class _HomePageState extends State<HomePage> {
 
                 // Assuming only one pet per user
                 final petData = snapshot.data!.docs.first.data() as Map<String, dynamic>;
-                final petName = petData['name']; // Replace 'petName' with the actual field name
+                final petName = petData['name']; // Replace 'name' with the actual field name if different
+                final vetName = petData['vetName'] ?? 'N/A';
+                final vetNumber = petData['vetNumber'] ?? 'N/A';
+                final vetLocation = petData['vetLocation'] ?? 'N/A';
 
-                return TopWidget(
-                    subText: "My Name is:", title: petName);
-              }),
-          const SizedBox(height: 20),
-          const Center(child: VetCard()),
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    TopWidget(
+                      subText: "My Name is:",
+                      title: petName,
+                    ),
+                    const SizedBox(height: 20),
+                    VetCard(
+                      vetName: vetName,
+                      vetNumber: vetNumber,
+                      vetLocation: vetLocation,
+                    ),
+                  ],
+                );
+              },
+            ),
+
           const SizedBox(height: 30),
           const Padding(
             padding: EdgeInsets.only(left: 30.0),
@@ -164,118 +180,109 @@ class _HomePageState extends State<HomePage> {
 }
 
 class VetCard extends StatelessWidget {
-  const VetCard({super.key});
+  final String vetName;
+  final String vetNumber;
+  final String vetLocation;
+
+  const VetCard({
+    Key? key,
+    required this.vetName,
+    required this.vetNumber,
+    required this.vetLocation,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 300,
-      decoration: BoxDecoration(
-          color: const Color.fromARGB(217, 217, 217, 217),
-          borderRadius: BorderRadius.circular(15)),
-      child:  Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: <Widget>[
-          const SizedBox(height: 10),
-          Center(
-                child: Row(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(left: 20.0),
-                      child: const Text(
-                        'Vetenarian Information',
-                        style: TextStyle(
-                          fontSize: 20,
-                        ),
+    return Center(
+      child: Container(
+        width: 300,
+        decoration: BoxDecoration(
+            color: const Color.fromARGB(217, 217, 217, 217),
+            borderRadius: BorderRadius.circular(15)),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[
+            const SizedBox(height: 10),
+            Center(
+              child: Row(
+                children: [
+                  const Padding(
+                    padding: EdgeInsets.only(left: 15.0),
+                    child: Text(
+                      'Veterinarian Information',
+                      style: TextStyle(
+                        fontSize: 20,
                       ),
                     ),
-                    IconButton(
-                icon: const  Icon(Icons.edit),
-                onPressed: () {},),
-                  ],
-                ),
+                  ),
+                  IconButton(
+                    icon: const Icon(Icons.edit),
+                    onPressed: () {}, // Implement edit logic if needed
+                  ),
+                ],
               ),
-              
-            
-          
-          const SizedBox(height: 10),
-          const Padding(
-            padding: EdgeInsets.only(left: 20.0),
-            child: Row(
-              children: [
-                Text(
-                  textAlign: TextAlign.left,
-                  style: TextStyle(
-                    fontSize: 10,
-                  ),
-                  'Name:',
-                ),
-                Padding(
-                  padding: EdgeInsets.only(left: 30.0),
-                  child: Text(
-                    textAlign: TextAlign.left,
-                    style: TextStyle(
-                      fontSize: 15,
-                    ),
-                    'Duck Creek Animal Hospital',
-                  ),
-                ),
-              ],
             ),
-          ),
-          const SizedBox(height: 10),
-          const Padding(
-            padding: EdgeInsets.only(left: 20.0),
-            child: Row(
-              children: [
-                Text(
-                  textAlign: TextAlign.left,
-                  style: TextStyle(
-                    fontSize: 10,
+            const SizedBox(height: 10),
+            Padding(
+              padding: const EdgeInsets.only(left: 20.0),
+              child: Row(
+                children: [
+                  const Text(
+                    'Name:',
+                    style: TextStyle(fontSize: 10),
                   ),
-                  'Number:',
-                ),
-                Padding(
-                  padding: EdgeInsets.only(left: 20.0),
-                  child: Text(
-                    textAlign: TextAlign.left,
-                    style: TextStyle(
-                      fontSize: 15,
+                  Padding(
+                    padding: const EdgeInsets.only(left: 30.0),
+                    child: Text(
+                      vetName,
+                      style: const TextStyle(fontSize: 15),
                     ),
-                    '(302) 653-2300',
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-          const SizedBox(height: 10),
-          const Padding(
-            padding: EdgeInsets.only(left: 20.0),
-            child: Row(
-              children: [
-                Text(
-                  textAlign: TextAlign.left,
-                  style: TextStyle(
-                    fontSize: 10,
+            const SizedBox(height: 10),
+            Padding(
+              padding: const EdgeInsets.only(left: 20.0),
+              child: Row(
+                children: [
+                  const Text(
+                    'Number:',
+                    style: TextStyle(fontSize: 10),
                   ),
-                  'Location:',
-                ),
-                Padding(
-                  padding: EdgeInsets.only(left: 20.0),
-                  child: Text(
-                    textAlign: TextAlign.left,
-                    style: TextStyle(
-                      fontSize: 15,
+                  Padding(
+                    padding: const EdgeInsets.only(left: 20.0),
+                    child: Text(
+                      vetNumber,
+                      style: const TextStyle(fontSize: 15),
                     ),
-                    'Smryna, DE',
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-          const SizedBox(height: 10),
-        ],
+            const SizedBox(height: 10),
+            Padding(
+              padding: const EdgeInsets.only(left: 20.0),
+              child: Row(
+                children: [
+                  const Text(
+                    'Location:',
+                    style: TextStyle(fontSize: 10),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 20.0),
+                    child: Text(
+                      vetLocation,
+                      style: const TextStyle(fontSize: 15),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 10),
+          ],
+        ),
       ),
     );
   }

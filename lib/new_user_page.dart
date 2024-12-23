@@ -1,4 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:petcent/auth_page.dart';
@@ -6,6 +9,14 @@ import 'package:petcent/login_register_page.dart';
 import 'package:petcent/main.dart';
 import 'package:petcent/utils/my_sign_in_button.dart';
 import 'package:petcent/utils/styled_text_field.dart';
+
+import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'dart:io';
+import 'dart:typed_data';
+
+
 
 class NewUser extends StatefulWidget {
   final user;
@@ -19,9 +30,15 @@ class _NewUserState extends State<NewUser> {
   final nameController = TextEditingController();
   final  vetNameController = TextEditingController();
   final vetLocationController = TextEditingController();
-  final vetPhoneController = TextEditingController();   
+  final vetPhoneController = TextEditingController(); 
 
-  void addPetName(BuildContext context, String name, String ownerUid) async {
+  File? _selectedImage;
+  Uint8List? _selectedImageBytes; // Store image data for web
+
+  final ImagePicker _picker = ImagePicker();
+final FirebaseStorage _storage = FirebaseStorage.instanceFor(bucket: "gs://petcareapp-c0a3f.appspot.com/");
+
+  void addPetName(BuildContext context, String name, String ownerUid, String profilePath) async {
     try {
       // Show loading indicator
       showDialog(
@@ -30,10 +47,21 @@ class _NewUserState extends State<NewUser> {
         builder: (context) => const Center(child: CircularProgressIndicator()),
       );
 
+      /*
+      final petName = petData['name']; // Replace 'name' with the actual field name if different
+                final vetName = petData['vetName'] ?? 'N/A';
+                final vetNumber = petData['vetNumber'] ?? 'N/A';
+                final vetLocation = petData['vetLocation'] ?? 'N/A';
+      */
+
       // Add pet name to Firestore
       await FirebaseFirestore.instance.collection("pets").add({
         "name": name,
         "owner": ownerUid,
+        "profilePic": profilePath,
+        "vetNumber": vetPhoneController.text,
+        "vetLocation": vetLocationController.text,
+        "vetName": vetNameController.text,
       });
 
       // Dismiss loading indicator
@@ -66,6 +94,46 @@ class _NewUserState extends State<NewUser> {
       );
     }
   }
+
+
+Future<void> _pickImage() async {
+  try {
+    final XFile? image = await _picker.pickImage(
+      source: ImageSource.gallery,
+    );
+    if (image != null) {
+      final Uint8List imageBytes = await image.readAsBytes(); // Read file as bytes
+      setState(() {
+        _selectedImageBytes = imageBytes;
+      });
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Image selected!')),
+      );
+    }
+  } catch (e) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('Error selecting image: $e')),
+    );
+  }
+}
+
+
+  // Function to upload the selected image to Firebase Storage
+  Future<String> uploadImage(String path, XFile image) async {
+    try {
+      final ref = FirebaseStorage.instance.ref(path).child(image.name);
+      await ref.putFile(File(image.path));
+      final url = await ref.getDownloadURL();
+      return url;
+
+    } on FirebaseException catch (e) {
+      print('Error uploading image: $e');
+    } catch (e) {
+      print('Error uploading image: $e');
+    }
+    return ''; // Return an empty string or handle the error appropriately
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -141,6 +209,28 @@ class _NewUserState extends State<NewUser> {
                 obscureText: false,
               ),
 
+              // Center(
+              //         child: Column(
+              //           mainAxisAlignment: MainAxisAlignment.center,
+              //           children: [
+              //             if (_selectedImage != null)
+              //               Image.file(
+              //                 _selectedImage!,
+              //                 height: 200,
+              //               ),
+              //             const SizedBox(height: 20),
+              //             ElevatedButton(
+              //               onPressed: _pickImage,
+              //               child: const Text('Upload Image'),
+              //             ),
+              //             const SizedBox(height: 10),
+              //             ElevatedButton(
+              //               onPressed: _uploadImage,
+              //               child: const Text('Upload to Firebase'),
+              //             ),
+              //           ],
+              //         ),
+              //       ),
               // //Upload Image
               // const SizedBox(height: 20),
               // const Text("Upload an image of your pet"),
@@ -156,7 +246,7 @@ class _NewUserState extends State<NewUser> {
               MySignInButton(
                 text: "Continue",
                 onTap: () =>
-                    addPetName(context, nameController.text, widget.user.uid),
+                    addPetName(context, nameController.text, widget.user.uid, "Test"),
               ),
             ],
           ),
