@@ -8,7 +8,7 @@ import 'package:petcent/utils/dialog_box.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 
-class VetCard extends StatelessWidget {
+class VetCard extends StatefulWidget {
   final String vetName;
   final String vetNumber;
   final String vetLocation;
@@ -21,13 +21,39 @@ class VetCard extends StatelessWidget {
   }) : super(key: key);
 
   @override
+  _VetCardState createState() => _VetCardState();
+}
+
+class _VetCardState extends State<VetCard> {
+  late bool isEditing;
+  late TextEditingController vetNameController;
+  late TextEditingController vetNumberController;
+  late TextEditingController vetLocationController;
+
+  @override
+  void initState() {
+    super.initState();
+    isEditing = false;
+    vetNameController = TextEditingController(text: widget.vetName);
+    vetNumberController = TextEditingController(text: widget.vetNumber);
+    vetLocationController = TextEditingController(text: widget.vetLocation);
+  }
+
+  void toggleEditing() {
+    setState(() {
+      isEditing = !isEditing;
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Center(
       child: Container(
         width: 300,
         decoration: BoxDecoration(
-            color: const Color.fromARGB(217, 217, 217, 217),
-            borderRadius: BorderRadius.circular(15)),
+          color: const Color.fromARGB(217, 217, 217, 217),
+          borderRadius: BorderRadius.circular(15),
+        ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
@@ -40,78 +66,55 @@ class VetCard extends StatelessWidget {
                     padding: EdgeInsets.only(left: 15.0),
                     child: Text(
                       'Veterinarian Information',
-                      style: TextStyle(
-                        fontSize: 20,
-                      ),
+                      style: TextStyle(fontSize: 20),
                     ),
                   ),
                   IconButton(
-                    icon: const Icon(Icons.edit),
-                    onPressed: () {}, // Implement edit logic if needed
+                    icon: Icon(isEditing ? Icons.check : Icons.edit),
+                    onPressed: toggleEditing,
                   ),
                 ],
               ),
             ),
             const SizedBox(height: 10),
-            Padding(
-              padding: const EdgeInsets.only(left: 20.0),
-              child: Row(
-                children: [
-                  const Text(
-                    'Name:',
-                    style: TextStyle(fontSize: 10),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 30.0),
-                    child: Text(
-                      vetName,
-                      style: const TextStyle(fontSize: 15),
-                    ),
-                  ),
-                ],
-              ),
-            ),
+            _buildAttributeRow('Name:', vetNameController),
             const SizedBox(height: 10),
-            Padding(
-              padding: const EdgeInsets.only(left: 20.0),
-              child: Row(
-                children: [
-                  const Text(
-                    'Number:',
-                    style: TextStyle(fontSize: 10),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 20.0),
-                    child: Text(
-                      vetNumber,
-                      style: const TextStyle(fontSize: 15),
-                    ),
-                  ),
-                ],
-              ),
-            ),
+            _buildAttributeRow('Number:', vetNumberController),
             const SizedBox(height: 10),
-            Padding(
-              padding: const EdgeInsets.only(left: 20.0),
-              child: Row(
-                children: [
-                  const Text(
-                    'Location:',
-                    style: TextStyle(fontSize: 10),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 20.0),
-                    child: Text(
-                      vetLocation,
-                      style: const TextStyle(fontSize: 15),
-                    ),
-                  ),
-                ],
-              ),
-            ),
+            _buildAttributeRow('Location:', vetLocationController),
             const SizedBox(height: 10),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _buildAttributeRow(String label, TextEditingController controller) {
+    return Padding(
+      padding: const EdgeInsets.only(left: 20.0, right: 15.0),
+      child: Row(
+        children: [
+          Text(
+            label,
+            style: const TextStyle(fontSize: 10),
+          ),
+          const SizedBox(width: 20),
+          Expanded(
+            child: isEditing
+                ? TextField(
+                    controller: controller,
+                    decoration: const InputDecoration(
+                      isDense: true,
+                      contentPadding: EdgeInsets.symmetric(vertical: 5),
+                    ),
+                    style: const TextStyle(fontSize: 15),
+                  )
+                : Text(
+                    controller.text,
+                    style: const TextStyle(fontSize: 15),
+                  ),
+          ),
+        ],
       ),
     );
   }

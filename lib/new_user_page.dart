@@ -8,6 +8,7 @@ import 'package:petcent/auth_page.dart';
 import 'package:petcent/login_register_page.dart';
 import 'package:petcent/main.dart';
 import 'package:petcent/utils/my_sign_in_button.dart';
+import 'package:petcent/utils/styled_phoneNumber_field.dart';
 import 'package:petcent/utils/styled_text_field.dart';
 
 import 'package:flutter/material.dart';
@@ -203,7 +204,7 @@ Future<void> _pickImage() async {
               ),
               //Veterinarian Phone Number
               const SizedBox(height: 20),
-              StyledTextField(
+              StyledPhoneNumberField(
                 controller: vetPhoneController,
                 hintText: 'Enter your veterinarian\'s phone number',
                 obscureText: false,
