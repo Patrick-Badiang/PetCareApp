@@ -20,7 +20,7 @@ class MySignInButton extends StatelessWidget {
         width: 300,
         height: 50,
         decoration: BoxDecoration(
-          color: Color.fromARGB(255, 61, 61, 61),
+          color: const Color.fromARGB(255, 61, 61, 61),
           borderRadius: BorderRadius.circular(8),
         ),
         child:  Center(

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:petcent/utilityFunctions.dart';
 
 class StyledPhoneNumberField extends StatelessWidget {
+  // ignore: prefer_typing_uninitialized_variables
   final controller;
   final String hintText;
   final bool obscureText;
@@ -15,15 +16,15 @@ class StyledPhoneNumberField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-     padding:  EdgeInsets.symmetric(horizontal: 25.0),
+     padding:  const EdgeInsets.symmetric(horizontal: 25.0),
      child: TextField(
       controller: controller,
       obscureText: obscureText,
        decoration: InputDecoration(
-         enabledBorder: OutlineInputBorder(
+         enabledBorder: const OutlineInputBorder(
            borderSide: BorderSide(color: Colors.white),
          ),
-         focusedBorder: OutlineInputBorder(
+         focusedBorder: const OutlineInputBorder(
            borderSide: BorderSide(color: Colors.grey),
          ),
          fillColor:  Colors.grey.shade200,

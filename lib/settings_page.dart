@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 
 class SettingsPage extends StatefulWidget {
   final User user;
-  SettingsPage({Key? key, required this.user}) : super(key: key);
+  const SettingsPage({super.key, required this.user});
 
   @override
   State<SettingsPage> createState() => _SettingsPageState();
@@ -66,7 +66,7 @@ class _SettingsPageState extends State<SettingsPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Settings'),
-        backgroundColor: Color(0xff4F759B),
+        backgroundColor: const Color(0xff4F759B),
       ),
       body: Column(
         children: <Widget>[
@@ -111,8 +111,6 @@ class _SettingsPageState extends State<SettingsPage> {
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // EditableWidget(label: "Pet Name", value: petName, isEditing: isEditing, document: document),
-                  // const SizedBox(height: 10),
                   _buildAttributeRow("Pet Name:", petNameController),
                   _buildAttributeRow("Vet Name:", vetNameController),
                   _buildAttributeRow("Vet Number:", vetNumberController),

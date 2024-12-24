@@ -11,6 +11,7 @@ enum Type {
 }
 
 class Appointments extends StatefulWidget {
+  // ignore: prefer_typing_uninitialized_variables
   final user;
   const Appointments({super.key, required this.user});
 

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:petcent/login_page.dart';
 import 'package:petcent/register_page.dart';
-import 'package:petcent/services/auth_service.dart';
 
 class LoginOrRegisterPage extends StatefulWidget {
   const LoginOrRegisterPage({super.key});

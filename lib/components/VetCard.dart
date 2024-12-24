@@ -1,9 +1,7 @@
-import 'package:firebase_core/firebase_core.dart';
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 
-import 'package:petcent/models/taskModel.dart';
-import 'package:petcent/components/topWidget.dart';
-import 'package:petcent/utils/dialog_box.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -15,14 +13,15 @@ class VetCard extends StatefulWidget {
   final DocumentSnapshot document;
 
   const VetCard({
-    Key? key,
+    super.key,
     required this.vetName,
     required this.vetNumber,
     required this.vetLocation,
     required this.document,
-  }) : super(key: key);
+  });
 
   @override
+  // ignore: library_private_types_in_public_api
   _VetCardState createState() => _VetCardState();
 }
 

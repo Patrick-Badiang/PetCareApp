@@ -9,6 +9,7 @@ import 'package:petcent/utils/dialog_box.dart';
 enum Type { vet, likes }
 
 class CaringPage extends StatefulWidget {
+  // ignore: prefer_typing_uninitialized_variables
   final user;
   const CaringPage({
     super.key,

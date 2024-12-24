@@ -1,14 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:petcent/main.dart';
 import 'package:petcent/services/auth_service.dart';
 import 'package:petcent/utils/my_sign_in_button.dart';
 import 'package:petcent/utils/my_square_tile.dart';
 import 'package:petcent/utils/styled_text_field.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'firebase_options.dart';
 
 class LoginPage extends StatefulWidget {
   final Function()? onTap;

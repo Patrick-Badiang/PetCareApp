@@ -1,4 +1,5 @@
-import 'package:firebase_core/firebase_core.dart';
+// ignore_for_file: prefer_typing_uninitialized_variables
+
 import 'package:flutter/material.dart';
 import 'package:petcent/components/VetCard.dart';
 
@@ -164,6 +165,7 @@ class _HomePageState extends State<HomePage> {
                               DocumentSnapshot freshSnap =
                                   await transactionHandler.get(
                                       snapshot.data!.docs[index].reference);
+                              // ignore: await_only_futures
                               await transactionHandler.update(
                                   freshSnap.reference,
                                   {'isDone': !freshSnap['isDone']});

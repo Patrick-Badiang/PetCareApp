@@ -31,7 +31,7 @@ class _AuthPageState extends State<AuthPage> {
                   final userDoc = snapshot.data;
                   if (userDoc?.exists ?? false) {
                     final isNewUser = userDoc!['isNewUser'] as bool;
-                    return isNewUser ? NewUser(user: user) : MyHomePage();
+                    return isNewUser ? NewUser(user: user) : const MyHomePage();
                   } else {
                     // Create a new user document with isNewUser set to true
                     FirebaseFirestore.instance
@@ -46,7 +46,7 @@ class _AuthPageState extends State<AuthPage> {
               },
             );
           } else {
-            return LoginOrRegisterPage(); // Or your login page
+            return const LoginOrRegisterPage(); // Or your login page
           }
         } else {
           return const CircularProgressIndicator();

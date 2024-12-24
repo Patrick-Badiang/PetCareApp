@@ -2,20 +2,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
 
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:petcent/auth_page.dart';
-import 'package:petcent/login_register_page.dart';
-import 'package:petcent/main.dart';
 import 'package:petcent/utils/my_sign_in_button.dart';
 import 'package:petcent/utils/styled_phoneNumber_field.dart';
 import 'package:petcent/utils/styled_text_field.dart';
 
-import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'dart:io';
-import 'dart:typed_data';
 
 
 
@@ -33,11 +27,6 @@ class _NewUserState extends State<NewUser> {
   final vetLocationController = TextEditingController();
   final vetPhoneController = TextEditingController(); 
 
-  File? _selectedImage;
-  Uint8List? _selectedImageBytes; // Store image data for web
-
-  final ImagePicker _picker = ImagePicker();
-final FirebaseStorage _storage = FirebaseStorage.instanceFor(bucket: "gs://petcareapp-c0a3f.appspot.com/");
 
   void addPetName(BuildContext context, String name, String ownerUid, String profilePath) async {
     try {
@@ -97,26 +86,7 @@ final FirebaseStorage _storage = FirebaseStorage.instanceFor(bucket: "gs://petca
   }
 
 
-Future<void> _pickImage() async {
-  try {
-    final XFile? image = await _picker.pickImage(
-      source: ImageSource.gallery,
-    );
-    if (image != null) {
-      final Uint8List imageBytes = await image.readAsBytes(); // Read file as bytes
-      setState(() {
-        _selectedImageBytes = imageBytes;
-      });
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Image selected!')),
-      );
-    }
-  } catch (e) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('Error selecting image: $e')),
-    );
-  }
-}
+
 
 
   // Function to upload the selected image to Firebase Storage

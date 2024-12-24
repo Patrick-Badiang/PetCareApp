@@ -10,10 +10,6 @@ import 'firebase_options.dart';
 
 import 'package:petcent/homepage.dart';
 import 'package:petcent/caringpage.dart';
-import 'package:petcent/login_page.dart';
-import 'package:petcent/utils/my_sign_in_button.dart';
-import 'package:petcent/utils/my_square_tile.dart';
-import 'package:petcent/utils/styled_text_field.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
