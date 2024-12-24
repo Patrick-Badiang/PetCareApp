@@ -10,7 +10,7 @@ class TopWidget extends StatelessWidget {
       color: const Color(0xff73BA9B),
       child: Column(
         children: [
-          PrintandCircle(pawcolor: Color(0xff4F759B),),
+          const PrintandCircle(pawcolor: Color(0xff4F759B),),
           Text(
             style: const TextStyle(
               fontSize: 30,
@@ -44,7 +44,7 @@ class PrintandCircle extends StatelessWidget {
           child: SizedBox(
             height: 250,
             width: 200,
-            child: PawPrint(pawColor: pawcolor,),
+            child: PawPrint(pawColor: pawcolor),
           ),
         ),
         const Flexible(

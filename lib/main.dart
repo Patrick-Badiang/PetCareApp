@@ -5,6 +5,7 @@ import 'package:petcent/appointmentpage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:petcent/auth_page.dart';
+import 'package:petcent/settings_page.dart';
 import 'firebase_options.dart';
 
 import 'package:petcent/homepage.dart';
@@ -72,7 +73,7 @@ class _MyHomePageState extends State<MyHomePage> {
         bottomNavigationBar: NavigationBar(
           onDestinationSelected: (int index) {
             // Check if the last index (sign out button) is selected
-            if (index == 3) {
+            if (index == 4) {
               // Assuming the new button is the fourth item
               signUserOut(); // Call the SignUserOut method
             } else {
@@ -101,8 +102,8 @@ class _MyHomePageState extends State<MyHomePage> {
               label: 'Caring for pet',
             ),
             NavigationDestination(
-              icon: Icon(Icons.logout),
-              label: 'Logout',
+              icon: Icon(Icons.settings),
+              label: 'Settings',
             ),
             
           ],
@@ -113,6 +114,7 @@ class _MyHomePageState extends State<MyHomePage> {
           HomePage(user: user),
           Appointments(user: user),
           CaringPage(user: user),
+          SettingsPage(user: user),
         ][currentPageIndex]);
   }
 }
